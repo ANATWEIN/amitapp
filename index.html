@@ -10,10 +10,10 @@
   :root{
     --navy:#21457f; --navy2:#1a3566; --navy3:#16294f;
     --cyan:#27c2dd; --cyan-d:#159fbd;
-    --amber:#f0a01f; --amber-d:#d4860f;
-    --paper:#ffffff; --ink:#21457f; --mut:#7a89a3; --line:#e8ecf3;
-    --track:#eaeef4; --donut:#2f4f8f; --bg:#f3f5f9;
-    --green:#2f9e6b;
+    --amber:#f0a01f; --amber-d:#EE7A1A;
+    --paper:#ffffff; --ink:#21457f; --mut:#6B7A90; --line:#E3E8EF;
+    --track:#eaeef4; --donut:#2f4f8f; --bg:#F4F6F9;
+    --green:#2FA85A;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   body{font-family:"Heebo",-apple-system,Arial,sans-serif;background:#d6dbe4;
@@ -191,6 +191,467 @@
   .upbtn{background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:inherit;font-weight:600;font-size:.82rem;padding:9px 14px;cursor:pointer}
   .upbtn:hover{filter:brightness(1.08)}
   .fname{display:block;margin-top:8px;font-size:.78rem;color:var(--mut)}
+
+  /* ================= EMPLOYEE LIFECYCLE — SELF SERVICE (mobile) ================= */
+  :root{--vio:#6d5ef7;--vio-d:#5a4ce0;--vio-l:#efeefe;--red:#e0473a;}
+  .ls-screen{position:absolute;inset:0;background:var(--bg);z-index:38;display:none;flex-direction:column;animation:slide .25s ease}
+  .ls-screen.open{display:flex}
+  .ls-head{background:#fff;padding:16px 18px 14px;flex-shrink:0;box-shadow:0 2px 10px rgba(33,69,127,.05)}
+  .ls-hrow{display:flex;align-items:flex-start;justify-content:space-between}
+  .ls-hi{font-family:"Rubik";font-weight:700;font-size:1.18rem;color:var(--ink)}
+  .ls-hi small{display:block;font-family:"Heebo";font-weight:400;font-size:.82rem;color:var(--mut);margin-top:2px}
+  .ls-bell{position:relative;background:var(--bg);border:none;width:40px;height:40px;border-radius:12px;font-size:1.15rem;cursor:pointer}
+  .ls-bell .nb{position:absolute;top:-3px;right:-3px;background:var(--red);color:#fff;border-radius:50%;min-width:18px;height:18px;font-size:.64rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+  .ls-prog{margin:14px 16px 0;background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;text-align:center}
+  .ls-prog .lab{font-size:.78rem;color:var(--mut);font-weight:600}
+  .ls-prog .pct{font-family:"Rubik";font-weight:800;font-size:2.1rem;color:var(--vio);line-height:1.1;margin:2px 0 10px}
+  .ls-bar{height:9px;border-radius:20px;background:var(--track);overflow:hidden}
+  .ls-bar>i{display:block;height:100%;border-radius:20px;background:linear-gradient(90deg,var(--vio),#8b7ffb)}
+  .ls-prog .sub{font-size:.74rem;color:var(--mut);margin-top:9px}
+  .ls-sec{margin:18px 16px 0}
+  .ls-sec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+  .ls-sec-h b{font-family:"Rubik";font-weight:600;font-size:.96rem;color:var(--ink)}
+  .ls-sec-h a{font-size:.78rem;color:var(--vio);font-weight:600;cursor:pointer}
+  .ls-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:9px;cursor:pointer;transition:transform .12s}
+  .ls-item:active{transform:scale(.985)}
+  .ls-item .li-ic{width:38px;height:38px;border-radius:11px;background:var(--vio-l);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+  .ls-item .li-tx{flex:1;min-width:0}
+  .ls-item .li-tx b{font-family:"Heebo";font-weight:600;font-size:.9rem;color:var(--ink);display:block}
+  .ls-item .li-tx span{font-size:.74rem;color:var(--mut)}
+  .ls-item .li-tx .prg{height:5px;border-radius:20px;background:var(--track);margin-top:6px;overflow:hidden}
+  .ls-item .li-tx .prg>i{display:block;height:100%;background:var(--vio);border-radius:20px}
+  .ls-chip{font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+  .lc-todo{background:#fff4e0;color:var(--amber-d)}
+  .lc-prog{background:var(--vio-l);color:var(--vio-d)}
+  .lc-done{background:#e6f6ee;color:var(--green)}
+  .lc-miss{background:#fdeceb;color:var(--red)}
+  .lc-none{background:#eef1f6;color:var(--mut)}
+  .ls-empty{background:#fff;border:1px dashed var(--line);border-radius:14px;padding:20px 14px;text-align:center;color:var(--mut)}
+  .ls-empty .ee{font-size:1.6rem;opacity:.5}
+  .ls-empty b{display:block;font-family:"Rubik";font-weight:600;font-size:.86rem;color:#8a95ab;margin:6px 0 2px}
+  .ls-empty span{font-size:.74rem}
+
+  /* ---------- side drawer ---------- */
+  .drawer-mask{position:absolute;inset:0;background:rgba(14,23,38,.45);z-index:48;opacity:0;pointer-events:none;transition:.25s}
+  .drawer-mask.open{opacity:1;pointer-events:auto}
+  .drawer{position:absolute;top:0;bottom:0;right:0;width:80%;max-width:300px;background:var(--bg);z-index:49;transform:translateX(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow-y:auto}
+  .drawer.open{transform:none}
+  .dr-top{background:linear-gradient(160deg,var(--navy3),var(--navy));padding:20px 18px 22px;color:#fff;position:relative}
+  .dr-top .x{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.14);border:none;color:#fff;width:32px;height:32px;border-radius:9px;font-size:1rem;cursor:pointer}
+  .dr-av{width:78px;height:78px;border-radius:50%;overflow:hidden;margin:6px auto 10px;border:3px solid rgba(255,255,255,.25)}
+  .dr-nm{text-align:center;font-family:"Rubik";font-weight:700;font-size:1.05rem}
+  .dr-rl{text-align:center;font-size:.78rem;color:#bcd0ec;margin-top:1px}
+  .dr-menu{padding:8px 10px;flex:1}
+  .dr-menu button{width:100%;display:flex;align-items:center;gap:12px;background:none;border:none;font-family:inherit;font-size:.92rem;color:#33425e;padding:12px 12px;border-radius:11px;cursor:pointer;text-align:right}
+  .dr-menu button .di{font-size:1.15rem;width:24px;text-align:center}
+  .dr-menu button.on,.dr-menu button:active{background:var(--vio-l);color:var(--vio-d);font-weight:600}
+  .dr-menu button .dn{margin-inline-start:auto;background:var(--red);color:#fff;border-radius:50%;min-width:19px;height:19px;font-size:.66rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .dr-exit{margin:8px 14px 18px;background:var(--vio-l);color:var(--vio-d);border:none;border-radius:12px;font-family:"Rubik";font-weight:600;font-size:.9rem;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px}
+  .dr-glab{font-family:"Rubik";font-weight:700;font-size:.68rem;color:#98a3b8;letter-spacing:.02em;padding:14px 14px 4px;text-transform:none}
+  .dr-menu button .dchev{margin-inline-start:auto;color:#c3cbdd;font-size:1.05rem}
+  .dr-menu button .dn+.dchev{margin-inline-start:8px}
+  .dr-role{margin:12px 14px 4px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
+  .dr-role .rl{font-size:.72rem;color:var(--mut);margin-bottom:7px}
+  .rsw{display:flex;background:var(--bg);border-radius:10px;padding:3px;gap:3px}
+  .rsw button{flex:1;border:none;background:none;font-family:inherit;font-size:.82rem;font-weight:600;color:var(--mut);padding:7px;border-radius:8px;cursor:pointer}
+  .rsw button.on{background:var(--navy);color:#fff}
+
+  /* ---------- generic destination page (authentic Synel screens) ---------- */
+  .page{position:absolute;inset:0;z-index:48;background:var(--bg);display:none;flex-direction:column;animation:slide .22s ease}
+  .page.open{display:flex}
+  .page-head{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 16px 18px;flex-shrink:0;position:relative}
+  .page-head .back{background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer;position:absolute;top:16px;left:16px}
+  .page-head b{font-family:"Rubik";font-weight:700;font-size:1.18rem;display:block;text-align:center;margin-top:4px}
+  .page-head span{font-size:.78rem;color:#bcd0ec;display:block;text-align:center;margin-top:3px}
+  .page-body{flex:1;overflow-y:auto;padding:18px}
+  .pg-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:4px 16px;margin-bottom:14px}
+  .pg-row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #f0f2f6;font-size:.9rem}
+  .pg-row:last-child{border-bottom:none}
+  .pg-row .k{color:var(--navy);font-weight:600}
+  .pg-row .v{color:#41506b;text-align:left}
+  .pg-field{margin-bottom:12px}
+  .pg-field label{display:block;font-size:.8rem;color:var(--mut);margin-bottom:5px;text-align:right}
+  .pg-input{width:100%;background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px;font-family:inherit;font-size:.92rem;color:var(--ink);text-align:right}
+  .pg-sel{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid var(--line);border-radius:11px;padding:12px;font-size:.92rem;color:var(--ink)}
+  .pg-sel .cr{color:var(--amber)}
+  .pg-toggle{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #f0f2f6}
+  .pg-toggle:last-child{border-bottom:none}
+  .pg-toggle b{font-family:"Rubik";font-size:.95rem;color:var(--ink)}
+  .sw{width:44px;height:26px;border-radius:20px;background:#cfd6e2;position:relative;flex-shrink:0}
+  .sw.on{background:var(--green)}
+  .sw i{position:absolute;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;right:3px}
+  .sw.on i{right:21px}
+  .pg-btn{width:100%;background:var(--navy);color:#fff;border:none;border-radius:13px;font-family:"Rubik";font-weight:600;font-size:.95rem;padding:14px;cursor:pointer;margin-top:6px}
+  .pg-listitem{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer}
+  .pg-listitem .li-av{width:42px;height:42px;border-radius:50%;background:#e7eefc;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+  .pg-listitem b{font-family:"Heebo";font-weight:600;color:var(--ink);font-size:.95rem;display:block}
+  .pg-listitem span{font-size:.8rem;color:var(--mut)}
+  .pg-note{text-align:center;color:#9aa6bd;font-size:.82rem;margin-top:20px;line-height:1.6}
+
+  /* ---------- lifecycle bottom sheet ---------- */
+  .sheet-mask{position:absolute;inset:0;background:rgba(14,23,38,.45);z-index:44;opacity:0;pointer-events:none;transition:.22s}
+  .sheet-mask.open{opacity:1;pointer-events:auto}
+  .sheet{position:absolute;left:0;right:0;bottom:0;z-index:45;background:#fff;border-radius:22px 22px 0 0;padding:8px 18px calc(20px + env(safe-area-inset-bottom));transform:translateY(100%);transition:transform .28s cubic-bezier(.4,0,.2,1);box-shadow:0 -12px 34px rgba(14,23,38,.22);max-height:82%;overflow-y:auto}
+  .sheet.open{transform:none}
+  .sheet .grab{width:42px;height:4px;border-radius:20px;background:#dfe4ee;margin:6px auto 14px}
+  .sheet .sh-ic{width:52px;height:52px;border-radius:15px;background:var(--vio-l);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:12px}
+  .sheet .sh-t{font-family:"Rubik";font-weight:700;font-size:1.12rem;color:var(--ink);display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+  .sheet .sh-d{font-size:.86rem;color:var(--mut);margin-top:6px;line-height:1.55}
+  .sheet .sh-prg{height:8px;border-radius:20px;background:var(--track);margin:14px 0 6px;overflow:hidden}
+  .sheet .sh-prg>i{display:block;height:100%;border-radius:20px;background:var(--vio)}
+  .sheet .sh-prgl{font-size:.76rem;color:var(--vio-d);font-weight:600;text-align:left}
+  .sheet .sh-meta{margin-top:14px;border-top:1px dashed var(--line);padding-top:12px}
+  .sheet .sh-meta .r{display:flex;justify-content:space-between;font-size:.84rem;padding:5px 0;color:#41506b}
+  .sheet .sh-meta .r b{font-family:"Rubik";color:var(--ink)}
+  .sheet .sh-act{margin-top:16px;width:100%;background:var(--vio);color:#fff;border:none;border-radius:13px;font-family:"Rubik";font-weight:600;font-size:.94rem;padding:13px;cursor:pointer}
+  .sheet .sh-act.ghost{background:var(--vio-l);color:var(--vio-d)}
+  .sheet .sh-act:active{transform:scale(.99)}
+  .sheet .sh-sec{background:var(--bg);border:none;color:var(--mut);border-radius:13px;font-family:inherit;font-size:.86rem;padding:11px;cursor:pointer;width:100%;margin-top:8px}
+  .ls-item{position:relative}
+  .ls-item::after{content:"‹";position:absolute;left:12px;color:#c3cbdd;font-size:1.2rem}
+  .ls-item .ls-chip{margin-inline-end:14px}
+  .ob-tag{display:inline-block;font-size:.6rem;font-weight:700;background:var(--vio-l);color:var(--vio-d);padding:1px 6px;border-radius:20px;vertical-align:middle;margin-inline-start:4px}
+
+  /* ---------- new home structure ---------- */
+  .home-urg{margin:14px 16px 0;display:flex;flex-direction:column;gap:9px}
+  .hu-item{border-radius:16px;padding:12px 14px;display:flex;align-items:center;gap:11px;cursor:pointer;border:1px solid}
+  .hu-item:active{transform:scale(.99)}
+  .hu-item.urg{background:linear-gradient(135deg,#fdeceb,#fbe0dd);border-color:#f3c3bf}
+  .hu-item.today{background:linear-gradient(135deg,#fff3e0,#ffe9cc);border-color:#f3d2a0}
+  .hu-item.pay{background:linear-gradient(135deg,#e9f7f0,#dcf3e8);border-color:#b6e2cd}
+  .hu-item .hu-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;background:#fff}
+  .hu-item .hu-tx{flex:1;min-width:0}
+  .hu-item .hu-tx b{font-family:"Rubik";font-weight:600;font-size:.88rem;color:var(--ink);display:block}
+  .hu-item .hu-tx span{font-size:.76rem;color:#5f6b80}
+  .hu-item .hu-go{font-size:1.15rem;color:#b9a}
+  .hu-item.urg .hu-go{color:var(--red)} .hu-item.today .hu-go{color:var(--amber-d)} .hu-item.pay .hu-go{color:var(--green)}
+  .act-primary{margin:16px 16px 0;border-radius:18px;background:linear-gradient(135deg,var(--vio),#8b7ffb);color:#fff;
+    padding:15px 16px;display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 10px 24px rgba(109,94,247,.3)}
+  .act-primary:active{transform:scale(.99)}
+  .act-primary .ap-ic{width:44px;height:44px;border-radius:13px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0}
+  .act-primary .ap-tx b{font-family:"Rubik";font-weight:700;font-size:1.02rem;display:block}
+  .act-primary .ap-tx span{font-size:.78rem;color:#e9e6ff}
+  .act-primary .ap-go{margin-inline-start:auto;font-size:1.3rem}
+  .short-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:12px 16px 0}
+  .short{background:#fff;border:1px solid var(--line);border-radius:16px;padding:15px 8px 12px;text-align:center;cursor:pointer;transition:transform .12s}
+  .short:active{transform:scale(.97)}
+  .short .si{width:44px;height:44px;border-radius:13px;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:1.35rem}
+  .short .stt{font-family:"Rubik";font-weight:600;font-size:.84rem;color:var(--ink)}
+  .short .sd{font-size:.68rem;color:var(--mut);margin-top:2px}
+
+  /* ---------- proactive Amit card ---------- */
+  .pro-card{margin:16px 16px 0;border-radius:18px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:15px 16px;box-shadow:0 10px 24px rgba(33,69,127,.28);position:relative;overflow:hidden}
+  .pro-card.calm{background:linear-gradient(135deg,#1f7a52,#2f9e6b);box-shadow:0 10px 24px rgba(31,122,82,.28)}
+  .pro-top{display:flex;align-items:center;gap:11px}
+  .pro-top .av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,var(--cyan),var(--cyan-d))}
+  .pro-top b{font-family:"Rubik";font-size:1rem;display:block}
+  .pro-top span{font-size:.76rem;color:#bcd0ec}
+  .pro-card.calm .pro-top span{color:#d6f5e6}
+  .pro-body{font-size:.86rem;line-height:1.5;margin:11px 0 12px;color:#e8eefb}
+  .pro-body b{color:var(--cyan)}
+  .pro-card.calm .pro-body b{color:#eafff3}
+  .pro-acts{display:flex;gap:9px}
+  .pro-acts button{flex:1;border:none;border-radius:11px;font-family:"Rubik";font-weight:600;font-size:.82rem;padding:10px;cursor:pointer}
+  .pro-acts .prime{background:var(--cyan);color:#08303a}
+  .pro-acts .sec{background:rgba(255,255,255,.15);color:#fff}
+
+  /* ---------- signature modal (SynelSignature) ---------- */
+  .sig{position:absolute;inset:0;z-index:70;background:#0e1726;display:none;flex-direction:column;animation:slide .2s ease}
+  .sig.open{display:flex}
+  .sig-head{padding:18px 18px 12px;color:#fff;flex-shrink:0}
+  .sig-head .x{background:rgba(255,255,255,.14);border:none;color:#fff;width:34px;height:34px;border-radius:10px;font-size:1rem;cursor:pointer;float:left}
+  .sig-head b{font-family:"Rubik";font-weight:700;font-size:1.08rem;display:block}
+  .sig-head span{font-size:.8rem;color:#9fb3d6}
+  .sig-doc{margin:6px 18px;background:#f6f8fb;border-radius:14px;padding:16px;flex:1;overflow-y:auto;font-size:.82rem;color:#41506b;line-height:1.7}
+  .sig-doc h4{font-family:"Rubik";color:var(--navy);margin-bottom:8px;font-size:.95rem}
+  .sig-doc .fine{font-size:.72rem;color:#8a95ab;margin-top:10px}
+  .sig-pad-wrap{margin:0 18px 8px}
+  .sig-pad-l{color:#9fb3d6;font-size:.78rem;margin-bottom:6px}
+  .sig-pad{width:100%;height:150px;background:#fff;border-radius:14px;border:2px dashed #cdd6e5;touch-action:none;display:block}
+  .sig-hint{text-align:center;color:#6b7a97;font-size:.74rem;margin-top:-118px;pointer-events:none;transition:.2s}
+  .sig-actions{padding:10px 18px calc(18px + env(safe-area-inset-bottom));display:flex;gap:10px;flex-shrink:0}
+  .sig-actions button{border-radius:12px;font-family:"Rubik";font-weight:600;font-size:.9rem;padding:13px;cursor:pointer;border:none}
+  .sig-actions .clr{flex:1;background:rgba(255,255,255,.12);color:#fff}
+  .sig-actions .ok{flex:2;background:var(--cyan);color:#08303a}
+  .sig-actions .ok:disabled{background:#3a4d63;color:#7f90a8}
+
+  /* ---------- notifications ---------- */
+  .ls-bell.alt{margin-inline-start:8px}
+  .notif{position:absolute;inset:0;z-index:46;background:var(--bg);display:none;flex-direction:column;animation:slide .22s ease}
+  .notif.open{display:flex}
+  .notif-head{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 16px 14px;display:flex;align-items:center;gap:11px;flex-shrink:0}
+  .notif-head .back{background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer}
+  .notif-head b{font-family:"Rubik";font-size:1.08rem;flex:1}
+  .notif-head .mark{background:none;border:none;color:var(--cyan);font-family:inherit;font-size:.8rem;font-weight:600;cursor:pointer}
+  .notif-filters{display:flex;gap:7px;padding:12px 14px 4px;flex-wrap:wrap;flex-shrink:0}
+  .notif-filters button{border:1px solid var(--line);background:#fff;border-radius:20px;font-family:inherit;font-size:.76rem;color:var(--mut);padding:6px 13px;cursor:pointer}
+  .notif-filters button.on{background:var(--navy);color:#fff;border-color:var(--navy);font-weight:600}
+  .notif-list{flex:1;overflow-y:auto;padding:8px 14px 20px}
+  .nrow{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 13px;display:flex;gap:11px;margin-bottom:9px;cursor:pointer;position:relative}
+  .nrow.unread{border-inline-start:4px solid var(--vio)}
+  .nrow.unread .nt{font-weight:700}
+  .nrow .ni{width:36px;height:36px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+  .nrow .nc{flex:1;min-width:0}
+  .nrow .nt{font-family:"Heebo";font-size:.88rem;color:var(--ink);display:block}
+  .nrow .nd{font-size:.78rem;color:var(--mut);margin-top:2px;line-height:1.45}
+  .nrow .ntime{font-size:.7rem;color:#a7b1c4;margin-top:5px}
+  .nrow .udot{position:absolute;top:14px;left:12px;width:8px;height:8px;border-radius:50%;background:var(--vio)}
+
+  /* ---------- life events engine ---------- */
+  .evt-new{width:100%;margin-bottom:10px;background:var(--vio-l);color:var(--vio-d);border:1px dashed #c7bffb;border-radius:14px;font-family:"Rubik";font-weight:600;font-size:.88rem;padding:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+  .evt-new:active{transform:scale(.99)}
+  .evt-active{background:#fff;border:1px solid var(--line);border-inline-start:4px solid var(--vio);border-radius:14px;padding:13px 14px;margin-bottom:9px}
+  .evt-active .ea-top{display:flex;align-items:center;gap:11px}
+  .evt-active .ea-ic{width:38px;height:38px;border-radius:11px;background:var(--vio-l);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+  .evt-active .ea-tt b{font-family:"Heebo";font-weight:600;font-size:.9rem;color:var(--ink);display:block}
+  .evt-active .ea-tt span{font-size:.74rem;color:var(--vio-d);font-weight:600}
+  .evt-active .ea-bar{height:5px;border-radius:20px;background:var(--track);margin:10px 0 0;overflow:hidden}
+  .evt-active .ea-bar>i{display:block;height:100%;background:var(--vio);border-radius:20px}
+  .evt-active .ea-cont{margin-top:11px;width:100%;background:var(--vio);color:#fff;border:none;border-radius:10px;font-family:"Rubik";font-weight:600;font-size:.82rem;padding:9px;cursor:pointer}
+  .tl-mob{margin-top:4px}
+
+  /* full-screen event flow */
+  .evt{position:absolute;inset:0;z-index:47;background:var(--bg);display:none;flex-direction:column;animation:slide .22s ease}
+  .evt.open{display:flex}
+  .evt-head{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:16px 16px 18px;flex-shrink:0}
+  .evt-head .back{background:rgba(255,255,255,.15);border:none;color:#fff;width:34px;height:34px;border-radius:50%;font-size:1.1rem;cursor:pointer;float:left}
+  .evt-head .eh-ic{font-size:1.6rem}
+  .evt-head b{font-family:"Rubik";font-weight:700;font-size:1.15rem;display:block;margin-top:6px}
+  .evt-head span{font-size:.8rem;color:#bcd0ec}
+  .evt-body{flex:1;overflow-y:auto;padding:18px 18px 90px}
+  .evt-note{background:#eef4fd;border:1px solid #d3e2f7;border-radius:12px;padding:11px 13px;font-size:.8rem;color:#2e4a78;line-height:1.5;margin-bottom:18px;display:flex;gap:8px}
+  .steps{position:relative;padding-inline-start:8px}
+  .step{position:relative;padding:0 26px 20px 0;min-height:34px}
+  .step::before{content:"";position:absolute;right:0;top:2px;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid #d7dced;display:flex}
+  .step::after{content:"";position:absolute;right:10px;top:24px;bottom:-2px;width:2px;background:#e2e7f1}
+  .step:last-child::after{display:none}
+  .step.done::before{content:"✓";background:var(--green);border-color:var(--green);color:#fff;font-size:.72rem;font-weight:800;text-align:center;line-height:20px}
+  .step.now::before{background:var(--vio);border-color:var(--vio);box-shadow:0 0 0 4px var(--vio-l)}
+  .step.now .st-n{color:var(--vio-d);font-weight:700}
+  .step .st-n{font-family:"Heebo";font-size:.9rem;color:var(--ink);font-weight:600}
+  .step.todo .st-n{color:#9aa6bd;font-weight:400}
+  .step .st-d{font-size:.74rem;color:var(--mut);margin-top:2px}
+  .evt-foot{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:13px 16px calc(15px + env(safe-area-inset-bottom))}
+  .evt-foot button{width:100%;background:var(--vio);color:#fff;border:none;border-radius:13px;font-family:"Rubik";font-weight:600;font-size:.94rem;padding:13px;cursor:pointer}
+  .evt-foot button.done{background:var(--green)}
+  .evt-foot button:disabled{background:#9aa6bd;cursor:default}
+  .evt-foot button.rej{background:var(--amber-d)}
+
+  /* classification + gated states */
+  .ev-tag{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .ev-self{background:#e6f6ee;color:var(--green)}
+  .ev-appr{background:#fff4e0;color:var(--amber-d)}
+  .step.wait::before{content:"⏳";background:#fff4e0;border-color:var(--amber);color:#9a6a12;font-size:.68rem;text-align:center;line-height:20px}
+  .step.wait .st-n{color:var(--amber-d);font-weight:700}
+  .step.rej::before{content:"✕";background:var(--red);border-color:var(--red);color:#fff;font-size:.72rem;font-weight:800;text-align:center;line-height:20px}
+  .step.rej .st-n{color:var(--red);font-weight:700}
+  .evt-wait{background:#fff4e0;border:1px solid #f3d2a0;border-radius:12px;padding:11px 13px;font-size:.8rem;color:#9a6a12;line-height:1.5;margin-top:14px;display:flex;gap:8px}
+  .evt-rej{background:#fdeceb;border:1px solid #f3c3bf;border-radius:12px;padding:11px 13px;font-size:.8rem;color:#b3372c;line-height:1.5;margin-top:14px}
+
+  /* manager approvals (admin) */
+  .appr-card{background:#fff;border:1px solid #eef0f5;border-inline-start:4px solid var(--amber);border-radius:14px;padding:15px 17px;margin-bottom:12px;display:flex;align-items:center;gap:14px}
+  .appr-card.rq{border-inline-start-color:var(--vio)}
+  .appr-ic{width:44px;height:44px;border-radius:12px;background:var(--vio-l);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+  .appr-tx{flex:1}
+  .appr-tx b{font-family:"Rubik";font-weight:600;color:#1c2440;display:block;font-size:.96rem}
+  .appr-tx .sub{font-size:.82rem;color:#5a688a;margin-top:2px}
+  .appr-tx .meta{font-size:.74rem;color:var(--mut);margin-top:5px}
+  .appr-btns{display:flex;gap:9px;flex-shrink:0}
+  .appr-btns button{border:none;border-radius:11px;font-family:"Rubik";font-weight:600;font-size:.84rem;padding:10px 18px;cursor:pointer}
+  .appr-ok{background:var(--green);color:#fff}
+  .appr-no{background:#fff;color:var(--red);border:1px solid #f3c3bf!important}
+  .appr-hist{opacity:.65}
+  .appr-hist .st-tag{margin-inline-start:auto}
+  .appr-empty{text-align:center;padding:50px 20px;color:#9aa6bd}
+  .appr-empty .ei{font-size:2.4rem;opacity:.4}
+  .appr-empty b{display:block;font-family:"Rubik";font-weight:600;color:#8894ad;margin:10px 0 3px}
+
+  /* ---------- recurring events & expirations (Amit-initiated) ---------- */
+  .rec-head{display:flex;align-items:center;gap:9px;margin:0 0 10px}
+  .rec-head .av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 1px 3px rgba(14,23,38,.18)}
+  .rec-head b{font-family:"Rubik";font-weight:600;font-size:.96rem;color:var(--ink)}
+  .rec-head span{font-size:.72rem;color:var(--mut);display:block;margin-top:1px}
+  .rec-item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:12px;margin-bottom:9px;cursor:pointer;border-inline-start:4px solid #d7dced}
+  .rec-item:active{transform:scale(.985)}
+  .rec-item.s-soft{border-inline-start-color:#c3cbdd}
+  .rec-item.s-due{border-inline-start-color:var(--amber)}
+  .rec-item.s-today{border-inline-start-color:#f0781f}
+  .rec-item.s-overdue{border-inline-start-color:var(--red)}
+  .rec-item .ri-ic{width:38px;height:38px;border-radius:11px;background:var(--vio-l);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+  .rec-item .ri-tx{flex:1;min-width:0}
+  .rec-item .ri-tx b{font-family:"Heebo";font-weight:600;font-size:.9rem;color:var(--ink);display:block}
+  .rec-item .ri-tx span{font-size:.74rem;color:var(--mut)}
+  .rec-chip{font-size:.66rem;font-weight:700;padding:3px 9px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+  .rc-soft{background:#eef1f6;color:#5b6b86}
+  .rc-due{background:#fff4e0;color:var(--amber-d)}
+  .rc-today{background:#ffe6d3;color:#c85a12}
+  .rc-overdue{background:#fdeceb;color:var(--red)}
+  /* escalation timeline in sheet */
+  .esc{display:flex;align-items:flex-start;margin:16px 0 6px}
+  .esc .node{flex:1;text-align:center;font-size:.66rem;color:var(--mut);position:relative}
+  .esc .node i{display:block;width:15px;height:15px;border-radius:50%;background:#e2e7f1;margin:0 auto 6px;position:relative;z-index:2}
+  .esc .node::after{content:"";position:absolute;top:7px;right:50%;width:100%;height:2px;background:#e2e7f1;z-index:1}
+  .esc .node:first-child::after{display:none}
+  .esc .node.on i{background:var(--vio)}
+  .esc .node.on{color:var(--vio-d);font-weight:700}
+  .esc .node.cur i{box-shadow:0 0 0 4px var(--vio-l)}
+
+  /* ================= ADMIN — full screen desktop (Dashboard + Employee card) ================= */
+  .admin{position:fixed;inset:0;z-index:200;background:#f4f5fa;display:none;flex-direction:row-reverse;font-family:"Heebo",sans-serif;color:#2b3552;overflow:hidden}
+  .admin.open{display:flex}
+  .adm-side{width:230px;flex-shrink:0;background:linear-gradient(180deg,#1c2440,#141a30);color:#cfd6ec;display:flex;flex-direction:column;padding:22px 0}
+  .adm-logo{font-family:"Rubik";font-weight:800;font-size:1.5rem;letter-spacing:.04em;color:#fff;text-align:center;margin-bottom:26px}
+  .adm-logo b{color:var(--cyan)}
+  .adm-nav{flex:1;padding:0 14px}
+  .adm-nav button{width:100%;display:flex;align-items:center;gap:13px;background:none;border:none;font-family:inherit;font-size:.92rem;color:#aeb8d6;padding:12px 15px;border-radius:12px;cursor:pointer;text-align:right;margin-bottom:3px;position:relative}
+  .adm-nav button .ai{font-size:1.1rem;width:22px;text-align:center}
+  .adm-nav button.on{background:var(--vio);color:#fff;font-weight:600;box-shadow:0 8px 20px rgba(109,94,247,.35)}
+  .adm-nav button:not(.on):hover{background:rgba(255,255,255,.06);color:#fff}
+  .adm-nav .abadge{position:absolute;left:12px;background:var(--red);color:#fff;border-radius:20px;font-size:.64rem;font-weight:700;padding:1px 7px}
+  .adm-close{margin:auto 16px 0;background:rgba(255,255,255,.08);border:none;color:#cfd6ec;font-family:inherit;font-size:.82rem;padding:11px;border-radius:11px;cursor:pointer}
+  .adm-main{flex:1;overflow-y:auto;padding:0 0 40px}
+  .adm-top{background:#fff;padding:16px 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:5;box-shadow:0 1px 0 #e8ecf3}
+  .adm-top .at-r{display:flex;align-items:center;gap:14px}
+  .adm-top .at-title{font-family:"Rubik";font-weight:700;font-size:1.35rem;color:#1c2440;text-align:left}
+  .adm-top .at-title small{display:block;font-family:"Heebo";font-weight:400;font-size:.8rem;color:var(--mut)}
+  .adm-top .at-user{display:flex;align-items:center;gap:10px}
+  .adm-top .at-user .au-av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0}
+  .adm-top .at-user .au-tx{text-align:right;font-size:.82rem}
+  .adm-top .at-user .au-tx b{font-family:"Rubik";display:block;color:#1c2440}
+  .adm-top .at-user .au-tx span{color:var(--mut);font-size:.74rem}
+  .adm-top .ico-btn{position:relative;background:#f4f5fa;border:none;width:40px;height:40px;border-radius:12px;font-size:1.1rem;cursor:pointer}
+  .adm-top .ico-btn .nb{position:absolute;top:-4px;left:-4px;background:var(--red);color:#fff;border-radius:50%;min-width:18px;height:18px;font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+  .adm-body{padding:22px 30px 0}
+  .adm-actbar{display:flex;align-items:center;gap:12px;margin-bottom:20px;flex-wrap:wrap}
+  .adm-btn{background:var(--vio);color:#fff;border:none;border-radius:11px;font-family:"Rubik";font-weight:600;font-size:.86rem;padding:11px 18px;cursor:pointer;display:inline-flex;align-items:center;gap:7px}
+  .adm-btn.ghost{background:#fff;color:#4a5573;border:1px solid #e2e7f1}
+  .adm-btn.ghost:hover{border-color:var(--vio);color:var(--vio)}
+  .adm-daterange{margin-inline-start:auto;display:flex;gap:10px}
+  .adm-pill{background:#fff;border:1px solid #e2e7f1;border-radius:11px;padding:10px 16px;font-size:.82rem;color:#4a5573;display:inline-flex;align-items:center;gap:8px}
+  /* KPI row */
+  .kpi-row{display:grid;grid-template-columns:repeat(8,1fr);gap:14px;margin-bottom:22px}
+  .kpi{background:#fff;border-radius:16px;padding:16px 14px;box-shadow:0 4px 16px rgba(33,69,127,.05);text-align:right}
+  .kpi .k-ic{width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.15rem;margin-bottom:10px}
+  .kpi .k-num{font-family:"Rubik";font-weight:800;font-size:1.7rem;color:#1c2440;line-height:1}
+  .kpi .k-lab{font-size:.72rem;color:var(--mut);margin-top:5px;line-height:1.3}
+  .kpi .k-sub{font-size:.68rem;margin-top:5px;font-weight:600}
+  .kpi .lnk{font-size:.7rem;color:var(--vio);font-weight:600;margin-top:8px;display:block;cursor:pointer}
+  /* generic panel */
+  .adm-grid{display:grid;gap:16px;margin-bottom:22px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2-3{grid-template-columns:2fr 1fr}
+  .panel{background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 16px rgba(33,69,127,.05)}
+  .panel h3{font-family:"Rubik";font-weight:600;font-size:1rem;color:#1c2440;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+  .panel h3 a{font-size:.74rem;color:var(--vio);font-weight:600;cursor:pointer}
+
+  /* admin proactive Amit card (team level) */
+  .adm-pro{background:linear-gradient(120deg,var(--navy),var(--navy2));color:#fff;border-radius:16px;padding:18px 22px;margin-bottom:22px;display:flex;align-items:center;gap:20px;box-shadow:0 10px 26px rgba(33,69,127,.22)}
+  .adm-pro .ap-av{width:52px;height:52px;border-radius:50%;overflow:hidden;flex-shrink:0;background:linear-gradient(135deg,var(--cyan),var(--cyan-d))}
+  .adm-pro .ap-h{flex-shrink:0}
+  .adm-pro .ap-h b{font-family:"Rubik";font-weight:700;font-size:1.05rem;display:block}
+  .adm-pro .ap-h span{font-size:.78rem;color:#bcd0ec}
+  .adm-pro .ap-items{display:flex;gap:12px;flex:1;flex-wrap:wrap}
+  .adm-pro .apx{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:.15s}
+  .adm-pro .apx:hover{background:rgba(255,255,255,.18)}
+  .adm-pro .apx .n{font-family:"Rubik";font-weight:700;font-size:1.3rem;color:var(--cyan)}
+  .adm-pro .apx.warn .n{color:#ffcf6b}
+  .adm-pro .apx.crit .n{color:#ff9a8f}
+  .adm-pro .apx .t{font-size:.8rem;line-height:1.3;color:#e8eefb}
+
+  /* team compliance / expirations */
+  .cmp-row{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid #f0f2f6}
+  .cmp-row:last-child{border-bottom:none}
+  .cmp-ic{width:40px;height:40px;border-radius:11px;background:var(--vio-l);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0}
+  .cmp-tx{flex:1;min-width:0}
+  .cmp-tx b{font-family:"Heebo";font-weight:600;font-size:.92rem;color:var(--ink);display:block}
+  .cmp-tx span{font-size:.8rem;color:var(--mut)}
+  .cmp-chip{font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0}
+  .cmp-btns{display:flex;gap:8px;flex-shrink:0}
+  .cmp-btns button{border:1px solid var(--line);background:#fff;border-radius:9px;font-family:inherit;font-size:.78rem;color:#41506b;padding:7px 12px;cursor:pointer;font-weight:600}
+  .cmp-btns button.p{background:var(--navy);color:#fff;border-color:var(--navy)}
+  /* donut */
+  .donut-wrap{display:flex;align-items:center;gap:18px}
+  .donut2{position:relative;width:120px;height:120px;flex-shrink:0}
+  .donut2 .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .donut2 .mid b{font-family:"Rubik";font-weight:800;font-size:1.5rem;color:#1c2440;line-height:1}
+  .donut2 .mid span{font-size:.66rem;color:var(--mut)}
+  .leg{flex:1}
+  .leg .lr{display:flex;align-items:center;gap:8px;font-size:.82rem;padding:3px 0;color:#4a5573}
+  .leg .lr .dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .leg .lr .v{margin-inline-start:auto;font-family:"Rubik";font-weight:600;color:#1c2440}
+  /* bars */
+  .barrow{margin-bottom:14px}
+  .barrow .bl{display:flex;justify-content:space-between;font-size:.82rem;color:#4a5573;margin-bottom:6px}
+  .barrow .bl b{font-family:"Rubik";color:#1c2440}
+  .bartr{height:9px;border-radius:20px;background:var(--track);overflow:hidden}
+  .bartr>i{display:block;height:100%;border-radius:20px}
+  /* alert list */
+  .alist .ar{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f0f2f7;font-size:.85rem;color:#3a4867}
+  .alist .ar{color:#3a4867}
+  .alist .ar:last-child{border-bottom:none}
+  .alist .ar .a-ic{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+  .alist .ar .a-n{margin-inline-start:auto;font-family:"Rubik";font-weight:700;background:#f4f5fa;border-radius:20px;padding:2px 10px;font-size:.78rem;color:#1c2440}
+  /* table */
+  .adm-table{width:100%;border-collapse:collapse;font-size:.84rem}
+  .adm-table th{text-align:right;color:var(--mut);font-weight:600;font-size:.76rem;padding:10px 8px;border-bottom:1px solid #eef0f5}
+  .adm-table td{padding:12px 8px;border-bottom:1px solid #f2f4f8;color:#3a4867}
+  .adm-table tr:last-child td{border-bottom:none}
+  .adm-table .emp{display:flex;align-items:center;gap:10px}
+  .adm-table .emp img,.adm-table .emp .ph{width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0}
+  .adm-table .emp b{font-family:"Rubik";font-weight:600;color:#1c2440}
+  .st-tag{font-size:.72rem;font-weight:700;padding:3px 11px;border-radius:20px}
+  .st-active{background:#e6f6ee;color:var(--green)}
+  .st-onb{background:var(--vio-l);color:var(--vio-d)}
+  .st-off{background:#fff4e0;color:var(--amber-d)}
+  .warn-i{color:var(--amber-d);font-weight:700}
+  .warn-r{color:var(--red);font-weight:700}
+  .adm-table .allrow{text-align:center;color:var(--vio);font-weight:600;cursor:pointer;padding-top:14px}
+  /* employee card header */
+  .ec-head{background:linear-gradient(120deg,#efeefe,#f6f5ff);border-radius:18px;padding:22px 24px;display:flex;align-items:center;gap:22px;margin-bottom:18px;position:relative}
+  .ec-head .ec-av{width:112px;height:112px;border-radius:50%;overflow:hidden;flex-shrink:0;border:4px solid #fff;box-shadow:0 8px 22px rgba(109,94,247,.2)}
+  .ec-head .ec-av img{width:100%;height:100%;object-fit:cover}
+  .ec-id{flex:1}
+  .ec-id .nm{font-family:"Rubik";font-weight:800;font-size:1.7rem;color:#1c2440;display:flex;align-items:center;gap:12px}
+  .ec-id .rl{font-size:.95rem;color:#5a688a;margin-top:2px}
+  .ec-id .rl{color:#5a688a}
+  .ec-id .meta{display:flex;gap:26px;margin-top:14px;font-size:.82rem;color:#4a5573;flex-wrap:wrap}
+  .ec-id .meta span b{font-family:"Rubik";color:#1c2440;display:block;font-size:.9rem}
+  .ec-id .contact{margin-top:12px;font-size:.82rem;color:#5a688a;display:flex;gap:20px}
+  .ec-facts{display:flex;gap:10px}
+  .ec-fact{background:#fff;border-radius:12px;padding:10px 16px;text-align:center;min-width:92px}
+  .ec-fact span{font-size:.7rem;color:var(--mut);display:block}
+  .ec-fact b{font-family:"Rubik";font-weight:700;font-size:.95rem;color:#1c2440}
+  .ec-tabs{display:flex;gap:6px;margin-bottom:18px;border-bottom:1px solid #e8ecf3;overflow-x:auto}
+  .ec-tabs button{background:none;border:none;font-family:inherit;font-size:.88rem;color:var(--mut);padding:12px 16px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+  .ec-tabs button.on{color:var(--vio);font-weight:600;border-bottom-color:var(--vio)}
+  .tl{position:relative;padding-inline-start:20px}
+  .tl .te{position:relative;padding:0 0 16px 0;font-size:.82rem}
+  .tl .te::before{content:"";position:absolute;right:-20px;top:3px;width:10px;height:10px;border-radius:50%;background:var(--vio);box-shadow:0 0 0 3px var(--vio-l)}
+  .tl .te::after{content:"";position:absolute;right:-16px;top:14px;bottom:-3px;width:2px;background:#e8ecf3}
+  .tl .te:last-child::after{display:none}
+  .tl .te .dt{color:var(--mut);font-size:.72rem}
+  .tl .te b{color:#1c2440;font-family:"Heebo";font-weight:600;display:block}
+  .kv{width:100%;font-size:.84rem}
+  .kv td{padding:7px 0;border-bottom:1px solid #f2f4f8;color:#4a5573}
+  .kv td:last-child{text-align:left;font-family:"Rubik";font-weight:600;color:#1c2440;direction:ltr;unicode-bidi:plaintext}
+  .doc-row{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid #f2f4f8;font-size:.84rem}
+  .doc-row:last-child{border-bottom:none}
+  .doc-row .df{width:30px;height:34px;border-radius:6px;background:#fdeceb;color:var(--red);font-size:.6rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .doc-row .dn{flex:1}.doc-row .dn b{color:#1c2440;font-family:"Heebo";font-weight:600;display:block}.doc-row .dn span{color:var(--mut);font-size:.72rem}
+  .equip-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f2f4f8;font-size:.84rem;color:#3a4867}
+  .equip-row:last-child{border-bottom:none}
+  .equip-row .eq-ic{font-size:1.05rem}
+  .equip-row .st-tag{margin-inline-start:auto}
+  .empty-panel{text-align:center;padding:26px 10px;color:#9aa6bd}
+  .empty-panel .ei{font-size:2rem;opacity:.4}
+  .empty-panel b{display:block;font-family:"Rubik";font-weight:600;color:#8894ad;margin:8px 0 3px;font-size:.9rem}
+  .empty-panel span{font-size:.78rem}
+  .ec-state{display:inline-flex;background:#fff;border:1px solid #e2e7f1;border-radius:10px;overflow:hidden;margin-inline-start:12px}
+  .ec-state button{background:none;border:none;font-family:inherit;font-size:.8rem;padding:8px 14px;cursor:pointer;color:var(--mut)}
+  .ec-state button.on{background:var(--vio);color:#fff;font-weight:600}
+  @media (max-width:1200px){.kpi-row{grid-template-columns:repeat(4,1fr)}.g4{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:820px){.adm-side{display:none}.kpi-row{grid-template-columns:repeat(2,1fr)}.g3,.g2-3{grid-template-columns:1fr}.adm-body{padding:16px}}
 </style>
 </head>
 <body>
@@ -222,6 +683,8 @@
         <div class="ab-go">‹</div>
       </div>
 
+      <div class="home-urg" id="home-urg"></div>
+
       <div class="balance">
         <div class="donut">
           <svg width="118" height="118" viewBox="0 0 118 118">
@@ -246,10 +709,109 @@
         <div class="go">‹</div>
       </div>
 
-      <div class="tiles">
-        <div class="tile" onclick="openChat('אני רוצה לבקש חופשה')"><div class="ic">🌴</div><div><div class="t">היעדרות עתידית</div><div class="d">בקשת חופשה, מחלה או מילואים</div></div></div>
-        <div class="tile" onclick="openChat('כמה שעות עבדתי החודש?')"><div class="ic">📊</div><div><div class="t">דיווח והוצאות</div><div class="d">מאזן שעות ודיווחים</div></div></div>
+      <div class="act-primary" onclick="openActionPicker()">
+        <div class="ap-ic">＋</div>
+        <div class="ap-tx"><b>פעולה חדשה</b><span>חופשה · מחלה · אישור · שינוי משרה · אירוע חיים</span></div>
+        <div class="ap-go">‹</div>
       </div>
+
+      <div class="short-row">
+        <div class="short" onclick="openChat('אני רוצה לבקש חופשה')"><div class="si" style="background:#e9f7f0">🌴</div><div class="stt">חופשה</div><div class="sd">בקשת היעדרות</div></div>
+        <div class="short" onclick="openChat('הצג לי את התלוש')"><div class="si" style="background:#fff4e0">💰</div><div class="stt">תלוש</div><div class="sd">שכר החודש</div></div>
+        <div class="short" onclick="openChat('כמה שעות עבדתי החודש?')"><div class="si" style="background:#eef4fd">📊</div><div class="stt">דיווח</div><div class="sd">מאזן שעות</div></div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile" onclick="openLife()"><div class="ic" style="background:var(--vio-l)">📋</div><div><div class="t">האזור האישי שלי</div><div class="d">מסמכים, לומדות, ציר חיי העובד — לצפייה ומעקב</div></div></div>
+      </div>
+    </div>
+
+    <!-- EMPLOYEE LIFECYCLE — SELF SERVICE -->
+    <div class="ls-screen" id="life">
+      <div class="ls-head">
+        <div class="ls-hrow">
+          <div class="ls-hi" id="ls-hi">בוקר טוב, מאיה 👋<small id="ls-sub">כיף לראות אותך שוב!</small></div>
+          <div style="display:flex">
+            <button class="ls-bell alt" onclick="openNotif()" aria-label="התראות">🔔<span class="nb" id="bell-badge">3</span></button>
+            <button class="ls-bell" onclick="openDrawer()" aria-label="תפריט">☰</button>
+          </div>
+        </div>
+      </div>
+      <div class="scroll" id="ls-scroll" style="padding-bottom:80px"></div>
+    </div>
+
+    <!-- SIDE DRAWER -->
+    <div class="drawer-mask" id="drawer-mask" onclick="closeDrawer()"></div>
+    <aside class="drawer" id="drawer">
+      <div class="dr-top">
+        <button class="x" onclick="closeDrawer()">✕</button>
+        <div class="dr-av"><span class="avatar" style="background-image:url('data:image/png;base64,')"></span></div>
+        <div class="dr-nm">מאיה כהן</div>
+        <div class="dr-rl" id="dr-rl">מנהלת שיווק דיגיטלי</div>
+      </div>
+      <div class="dr-role">
+        <div class="rl">תצוגת הדגמה · הרשאה</div>
+        <div class="rsw">
+          <button id="rsw-emp" onclick="setRole('emp')">עובד</button>
+          <button id="rsw-mgr" onclick="setRole('mgr')">מנהל / HR</button>
+        </div>
+      </div>
+      <div class="dr-menu" id="dr-menu"></div>
+      <button class="dr-exit" onclick="closeDrawer()">יציאה מהמערכת ⇥</button>
+    </aside>
+
+    <!-- generic destination page (authentic Synel menu screens) -->
+    <div class="page" id="page">
+      <div class="page-head"><button class="back" onclick="closePage()">›</button>
+        <b id="page-title">מסך</b><span id="page-sub"></span></div>
+      <div class="page-body" id="page-body"></div>
+    </div>
+
+    <!-- lifecycle bottom sheet -->
+    <div class="sheet-mask" id="sheet-mask" onclick="closeSheet()"></div>
+    <div class="sheet" id="sheet"></div>
+
+    <!-- SynelSignature — full screen signing -->
+    <div class="sig" id="sig">
+      <div class="sig-head">
+        <button class="x" onclick="closeSign()">✕</button>
+        <b id="sig-title">חתימה דיגיטלית</b><span id="sig-sub">SynelSignature · חתימה מאובטחת</span>
+      </div>
+      <div class="sig-doc" id="sig-doc"></div>
+      <div class="sig-pad-wrap">
+        <div class="sig-pad-l">חתום/י כאן באצבע 👇</div>
+        <canvas class="sig-pad" id="sig-pad"></canvas>
+        <div class="sig-hint" id="sig-hint">— חתימה —</div>
+      </div>
+      <div class="sig-actions">
+        <button class="clr" onclick="sigClear()">ניקוי</button>
+        <button class="ok" id="sig-ok" onclick="sigConfirm()" disabled>אישור וחתימה</button>
+      </div>
+    </div>
+
+    <!-- Notification center -->
+    <div class="notif" id="notif">
+      <div class="notif-head">
+        <button class="back" onclick="closeNotif()">›</button>
+        <b>התראות</b>
+        <button class="mark" onclick="markAllRead()">סמן הכל כנקרא</button>
+      </div>
+      <div class="notif-filters" id="notif-filters"></div>
+      <div class="notif-list" id="notif-list"></div>
+    </div>
+
+    <!-- hidden upload input -->
+    <input type="file" id="ls-upload" accept="image/*,application/pdf" capture="environment" style="display:none" onchange="onUpload(this)">
+
+    <!-- life event flow (full screen) -->
+    <div class="evt" id="evt">
+      <div class="evt-head">
+        <button class="back" onclick="closeEvt()">›</button>
+        <div class="eh-ic" id="evt-ic">📊</div>
+        <b id="evt-title">אירוע</b><span id="evt-sub"></span>
+      </div>
+      <div class="evt-body" id="evt-body"></div>
+      <div class="evt-foot"><button id="evt-cta" onclick="advanceEvt()">המשך</button></div>
     </div>
 
     <!-- CHAT -->
@@ -269,15 +831,39 @@
 
     <!-- bottom nav -->
     <nav class="bnav">
-      <button onclick="closeChat()"><span class="ti">🏠</span>בית</button>
+      <button onclick="goHome()"><span class="ti">🏠</span>בית</button>
       <button onclick="openChat()"><span class="ti">💬</span>עמית</button>
-      <button onclick="toast('אזור מנהל — דמו')"><span class="ti">👤</span>אזור מנהל</button>
+      <button onclick="openLife()"><span class="ti">📋</span>האזור שלי</button>
+      <button id="bnav-admin" onclick="openAdmin()"><span class="ti">🖥️</span>אזור מנהל</button>
     </nav>
 
     <div id="toast" style="position:absolute;bottom:80px;left:50%;transform:translateX(-50%);background:#16294f;color:#fff;padding:9px 18px;border-radius:30px;font-size:.82rem;opacity:0;transition:.25s;z-index:60;pointer-events:none"></div>
   </div>
 
   <p class="footnote">דמו להמחשה. עמית מושך נתונים אישיים בזמן אמת מהמערכת (חקר תלוש / נוכחות), מצטט מקור, ומעביר לאדם כל מה שאינו ודאי או דורש אישור. הנתונים כאן הם הדגמה.</p>
+
+  <!-- ADMIN — full screen desktop -->
+  <div class="admin" id="admin">
+    <aside class="adm-side">
+      <div class="adm-logo">SY<b>N</b>EL</div>
+      <nav class="adm-nav" id="adm-nav"></nav>
+      <button class="adm-close" onclick="closeAdmin()">← חזרה לאפליקציית העובד</button>
+    </aside>
+    <main class="adm-main">
+      <div class="adm-top">
+        <div class="at-title" id="adm-title">Dashboard ניהולי<small>תמונת מצב כללית</small></div>
+        <div class="at-r">
+          <button class="ico-btn">❓</button>
+          <button class="ico-btn">🔔<span class="nb">12</span></button>
+          <div class="at-user">
+            <div class="au-tx"><b>שירי לוי</b><span>מנהלת משאבי אנוש</span></div>
+            <div class="au-av"><span class="avatar"></span></div>
+          </div>
+        </div>
+      </div>
+      <div id="adm-view"></div>
+    </main>
+  </div>
 
 <script>
 
@@ -607,6 +1193,996 @@ function openChat(seed){
 function closeChat(){document.getElementById('chat').classList.remove('open');}
 let tt;function toast(m){const e=document.getElementById('toast');e.textContent=m;e.style.opacity=1;clearTimeout(tt);tt=setTimeout(()=>e.style.opacity=0,1600);}
 renderEx();
+
+/* =================================================================
+   EMPLOYEE LIFECYCLE — self service (mobile) + drawer + admin
+   ================================================================= */
+function goHome(){closeChat();closeLife();renderHomeUrgent();}
+function openLife(){closeChat();document.getElementById('life').classList.add('open');renderLife();}
+function closeLife(){document.getElementById('life').classList.remove('open');}
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('drawer-mask').classList.add('open');}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('drawer-mask').classList.remove('open');}
+
+/* ---- self-service data (two states) ---- */
+let LIFE_STATE='vet';   // 'vet' | 'new'
+const LIFE={
+  vet:{hi:'בוקר טוב, מאיה 👋',sub:'כיף לראות אותך שוב!',done:13,total:15,
+    tasks:[
+      {t:'חתימה על עדכון תנאי העסקה',d:'תאריך יעד: 12/05/2025',ic:'✍️',c:'lc-todo',cl:'ממתין לחתימה'},
+      {t:'לומדת אבטחת מידע · ריענון',d:'הושלם 60%',ic:'🎓',c:'lc-prog',cl:'בתהליך',prg:60},
+      {t:'שאלון הערכת בטיחות',d:'תאריך יעד: 18/05/2025',ic:'📋',c:'lc-none',cl:'לא התחיל'}],
+    docs:[
+      {t:'טופס 101 · שנת מס 2023',d:'נחתם בקליטה · 01/03/2023',ic:'📝',c:'lc-done',cl:'נחתם',ob:1},
+      {t:'חוזה העסקה',d:'נחתם בקליטה · 01/03/2023',ic:'✍️',c:'lc-done',cl:'נחתם',ob:1},
+      {t:'סעיף 14 · פיצויים ופנסיה',d:'נחתם בקליטה · 01/03/2023',ic:'💼',c:'lc-done',cl:'נחתם',ob:1},
+      {t:'נהלי החברה',d:'נקרא ואושר בקליטה · 01/03/2023',ic:'📋',c:'lc-done',cl:'אושר',ob:1},
+      {t:'הצטרפות לפנסיה',d:'נחתם בקליטה · 01/03/2023',ic:'🏦',c:'lc-done',cl:'נחתם',ob:1},
+      {t:'עדכון תנאי העסקה',d:'נשלח: 10/05/2025',ic:'📄',c:'lc-todo',cl:'ממתין לחתימה'}],
+    learn:[
+      {t:'אבטחת מידע · ריענון',d:'הושלם: 05/2025',ic:'🎓',c:'lc-done',cl:'100%',prg:100},
+      {t:'נהלי החברה',d:'הושלם: 20/04/2025',ic:'🎓',c:'lc-done',cl:'100%',prg:100}],
+    proc:[{t:'שינוי תפקיד',d:'הושלם 20%',ic:'🔄',c:'lc-prog',cl:'בתהליך',prg:20}]},
+  new:{hi:'בוקר טוב, יואב 👋',sub:'ברוך הבא לחברה! 🎉',done:2,total:10,
+    tasks:[
+      {t:'חתימה על טופס 101',d:'תאריך יעד: 15/05/2025',ic:'📝',c:'lc-todo',cl:'ממתין לחתימה'},
+      {t:'חתימה על חוזה העסקה',d:'תאריך יעד: 15/05/2025',ic:'✍️',c:'lc-todo',cl:'ממתין לחתימה'},
+      {t:'העלאת תעודת זהות',d:'תאריך יעד: 14/05/2025',ic:'🪪',c:'lc-miss',cl:'חסר מסמך'},
+      {t:'לומדת היכרות עם החברה',d:'תאריך יעד: 20/05/2025',ic:'🎓',c:'lc-none',cl:'לא התחיל'}],
+    docs:[
+      {t:'סעיף 14 · פיצויים ופנסיה',d:'נחתם בקליטה · 03/06/2025',ic:'💼',c:'lc-done',cl:'נחתם',ob:1},
+      {t:'נהלי החברה',d:'נקרא ואושר בקליטה · 02/06/2025',ic:'📋',c:'lc-done',cl:'אושר',ob:1}],
+    learn:[],
+    proc:[{t:'תהליך קליטה',d:'הושלם 20%',ic:'🚀',c:'lc-prog',cl:'בתהליך',prg:20}]}
+};
+const SEC_LABEL={tasks:'משימה',docs:'מסמך',learn:'לומדה',proc:'תהליך'};
+function lifeToggle(s){LIFE_STATE=s;renderLife();}
+function lifeItem(sec,i,x,prog){
+  return `<div class="ls-item" onclick="openSheet('${sec}',${i})"><div class="li-ic">${x.ic||'📄'}</div>
+    <div class="li-tx"><b>${x.t}${x.ob?' <span class="ob-tag">מקליטה</span>':''}</b><span>${x.d}</span>
+    ${prog&&x.prg!=null&&x.prg<100?`<div class="prg"><i style="width:${x.prg}%"></i></div>`:''}</div>
+    <span class="ls-chip ${x.c}">${x.cl}</span></div>`;
+}
+function lifeSec(sec,title,arr,emptyTxt,prog){
+  const body = arr.length
+    ? arr.map((x,i)=>lifeItem(sec,i,x,prog)).join('')
+    : `<div class="ls-empty"><div class="ee">🗂️</div><b>אין פריטים כרגע</b><span>${emptyTxt}</span></div>`;
+  return `<div class="ls-sec"><div class="ls-sec-h"><b>${title}</b>${arr.length>2?'<a>הצג הכל</a>':''}</div>${body}</div>`;
+}
+function proCard(){
+  const d=LIFE[LIFE_STATE];
+  const pend=[];
+  ['tasks','docs'].forEach(sec=>d[sec].forEach((x,i)=>{if(x.c==='lc-miss'||x.c==='lc-todo'||x.c==='lc-none')pend.push({sec,i,x});}));
+  // urgency order: miss > todo > none
+  const rank={'lc-miss':0,'lc-todo':1,'lc-none':2};
+  pend.sort((a,b)=>rank[a.x.c]-rank[b.x.c]);
+  if(!pend.length){
+    return `<div class="pro-card calm"><div class="pro-top">
+      <div class="av"><span class="avatar mini"></span></div>
+      <div><b>עמית</b><span>הכל מעודכן</span></div></div>
+      <div class="pro-body">כל הכבוד! אין משימות פתוחות כרגע. אמשיך לעקוב ואעדכן אותך אם יצוץ משהו.</div></div>`;
+  }
+  const top=pend[0];
+  const urgent=pend.filter(p=>p.x.c==='lc-miss').length;
+  const line = urgent
+    ? `יש לך <b>${pend.length} פריטים פתוחים</b>, מתוכם <b>${urgent} דורשים טיפול מיידי</b>. הכי דחוף: ${top.x.t}.`
+    : `שמתי לב ל-<b>${pend.length} פריטים שממתינים לך</b>. הכי כדאי להתחיל מ: ${top.x.t}.`;
+  return `<div class="pro-card"><div class="pro-top">
+      <div class="av"><span class="avatar mini"></span></div>
+      <div><b>עמית שם לב</b><span>מבוסס על המשימות שלך</span></div></div>
+      <div class="pro-body">${line}</div>
+      <div class="pro-acts">
+        <button class="prime" onclick="openSheet('${top.sec}',${top.i})">טיפול עכשיו</button>
+        <button class="sec" onclick="closeLife();openChat('מה נשאר לי לסגור?')">שאל/י את עמית</button>
+      </div></div>`;
+}
+function renderLife(){
+  const d=LIFE[LIFE_STATE];
+  const pct=Math.round(d.done/d.total*100);
+  document.getElementById('ls-hi').innerHTML=`${d.hi}<small>${d.sub}</small>`;
+  document.getElementById('ls-scroll').innerHTML=`
+    <div class="ls-sec" style="margin-top:14px"><div class="ec-state" style="margin:0;display:flex;width:100%">
+      <button class="${LIFE_STATE==='vet'?'on':''}" style="flex:1" onclick="lifeToggle('vet')">עובד ותיק</button>
+      <button class="${LIFE_STATE==='new'?'on':''}" style="flex:1" onclick="lifeToggle('new')">עובד חדש</button>
+    </div></div>
+    ${proCard()}
+    <div class="ls-prog"><div class="lab">התקדמות כללית</div><div class="pct">${pct}%</div>
+      <div class="ls-bar"><i style="width:${pct}%"></i></div><div class="sub">${d.done} מתוך ${d.total} שלבים הושלמו</div></div>
+    ${recurSection()}
+    ${lifeSec('tasks','המשימות שלי',d.tasks,'משימות חדשות יופיעו כאן',true)}
+    ${lifeSec('docs','המסמכים שלי',d.docs,'מסמכים לחתימה יופיעו כאן לאחר השלמה',false)}
+    ${lifeSec('learn','הלומדות שלי',d.learn,'לומדות חובה ישוייכו כאן בקרוב',true)}
+    ${lifeSec('proc','תהליכים פעילים',d.proc,'תהליכים פעילים יופיעו כאן',true)}
+    ${lifeEventsSection()}`;
+}
+
+/* ---- clickable item → bottom sheet ---- */
+let SHEET_REF=null; // {sec,i}
+function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sheet-mask').classList.remove('open');SHEET_REF=null;}
+function sheetActionFor(x){
+  // returns {label, kind} for the primary action, by status
+  if(x.c==='lc-done') return {label:'צפייה במסמך',kind:'view'};
+  if(x.c==='lc-miss') return {label:'העלאת מסמך',kind:'upload'};
+  if(x.c==='lc-none') return {label:'התחלה עכשיו',kind:'start'};
+  if(x.c==='lc-prog') return {label:'המשך',kind:'advance'};
+  return {label:'חתימה עכשיו',kind:'sign'}; // lc-todo
+}
+function openSheet(sec,i){
+  const x=LIFE[LIFE_STATE][sec][i];if(!x)return;
+  SHEET_REF={sec,i};
+  const act=sheetActionFor(x);
+  const isSign = sec==='docs'||/חתימה/.test(x.t);
+  const desc = {
+    'lc-todo': sec==='docs'?'המסמך מוכן וממתין לחתימתך הדיגיטלית. החתימה מאובטחת ומתועדת ב-Audit Trail.':'הפריט ממתין לפעולה שלך. לאחר החתימה הוא יתעדכן אוטומטית בכרטיס העובד ובדשבורד הניהולי.',
+    'lc-prog': `הפעילות בתהליך — ${x.prg||0}% הושלמו. אפשר להמשיך מהמקום שבו עצרת.`,
+    'lc-none': 'טרם התחלת בפריט זה. מומלץ להשלים עד תאריך היעד.',
+    'lc-miss': 'חסר מסמך נדרש. ניתן להעלות צילום או PDF; המערכת תעביר לאישור.',
+    'lc-done': 'הפריט הושלם ומתועד. ניתן לצפות במסמך החתום בכל עת.'
+  }[x.c]||'';
+  const descFull = desc + (x.ob?' <b>מסמך זה נחתם בתהליך הקליטה שלך</b> ונשמר אוטומטית באזור האישי.':'');
+  const prgBlock = (x.prg!=null && x.prg<100)
+    ? `<div class="sh-prg"><i style="width:${x.prg}%"></i></div><div class="sh-prgl">${x.prg}% הושלם</div>` : '';
+  const secondary = x.c!=='lc-done'
+    ? `<button class="sh-sec" onclick="askFromSheet()">שאל/י את עמית על הפריט</button>`
+    : `<button class="sh-sec" onclick="closeSheet()">סגירה</button>`;
+  document.getElementById('sheet').innerHTML=`
+    <div class="grab"></div>
+    <div class="sh-ic">${x.ic||'📄'}</div>
+    <div class="sh-t">${x.t} <span class="ls-chip ${x.c}">${x.cl}</span></div>
+    <div class="sh-d">${descFull}</div>
+    ${prgBlock}
+    <div class="sh-meta">
+      <div class="r"><span>סוג</span><b>${SEC_LABEL[sec]}${x.ob?' · מהקליטה':''}</b></div>
+      <div class="r"><span>פרטים</span><b>${x.d}</b></div>
+      <div class="r"><span>סטטוס</span><b>${x.cl}</b></div>
+    </div>
+    <button class="sh-act ${x.c==='lc-done'?'ghost':''}" onclick="sheetAct('${act.kind}')">${isSign&&act.kind==='sign'?'✍️ ':''}${act.label}</button>
+    ${secondary}`;
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('sheet-mask').classList.add('open');
+}
+function askFromSheet(){const x=LIFE[LIFE_STATE][SHEET_REF.sec][SHEET_REF.i];closeSheet();closeLife();openChat(x.t);}
+function sheetAct(kind){
+  if(!SHEET_REF)return;
+  const d=LIFE[LIFE_STATE], x=d[SHEET_REF.sec][SHEET_REF.i];
+  if(kind==='view'){toast('פותח את המסמך… 📄');closeSheet();return;}
+  if(kind==='sign'){openSign();return;}          // full-screen SynelSignature
+  if(kind==='upload'){document.getElementById('ls-upload').click();return;}  // real file picker
+  const wasDone = x.c==='lc-done';
+  if(kind==='start'){x.c='lc-prog';x.cl='בתהליך';x.prg=10;x.d='הושלם 10%';toast('התחלנו — בהצלחה!');}
+  else if(kind==='advance'){
+    x.prg=Math.min(100,(x.prg||0)+20);
+    if(x.prg>=100){x.c='lc-done';x.cl=SHEET_REF.sec==='learn'?'100%':'הושלם';x.d='הושלם היום · '+today();toast('כל הכבוד — הושלם! 🎉');}
+    else{x.cl='בתהליך';x.d='הושלם '+x.prg+'%';toast('התקדמת ל-'+x.prg+'%');}
+  }
+  if(!wasDone && x.c==='lc-done') d.done=Math.min(d.total,d.done+1);
+  closeSheet();renderLife();
+}
+function completeItem(x,label,detail,note){ // shared completion after sign/upload
+  const d=LIFE[LIFE_STATE];const wasDone=x.c==='lc-done';
+  x.c='lc-done';x.cl=label;x.d=detail;
+  if(!wasDone)d.done=Math.min(d.total,d.done+1);
+  addNotif('✅','#e6f6ee',note,x.t,'system');
+  renderLife();
+}
+function today(){const t=new Date();return pad(t.getDate())+'/'+pad(t.getMonth()+1)+'/'+t.getFullYear();}
+
+/* ---- real upload ---- */
+function onUpload(inp){
+  if(!inp.files||!inp.files.length||!SHEET_REF)return;
+  const f=inp.files[0], x=LIFE[LIFE_STATE][SHEET_REF.sec][SHEET_REF.i];
+  const nm=f.name.length>22?f.name.slice(0,20)+'…':f.name;
+  completeItem(x,'הועלה','הועלה היום · '+nm,'המסמך "'+x.t+'" הועלה ונשלח לאישור');
+  toast('✓ '+nm+' הועלה');
+  inp.value='';closeSheet();
+}
+
+/* ---- SynelSignature: full-screen digital signature ---- */
+let sigCtx,sigDrawn=false,sigDrawing=false;
+const SIG_DOCS={
+  'חתימה על עדכון תנאי העסקה':{h:'עדכון תנאי העסקה',b:'הריני מאשר/ת את עדכון תנאי ההעסקה כפי שהוצגו לי, לרבות עדכון הדרגה והתעריף השעתי, בתוקף מ-01/06/2025.'},
+  'עדכון תנאי העסקה':{h:'עדכון תנאי העסקה',b:'הריני מאשר/ת את עדכון תנאי ההעסקה כפי שהוצגו לי, לרבות עדכון הדרגה והתעריף השעתי, בתוקף מ-01/06/2025.'},
+  'חתימה על טופס 101':{h:'טופס 101 · 2026',b:'הצהרה על נקודות זיכוי ופרטים אישיים לצורכי מס. אני מצהיר/ה כי הפרטים נכונים ומלאים.'},
+  'חתימה על חוזה העסקה':{h:'חוזה העסקה',b:'הריני מאשר/ת את תנאי חוזה ההעסקה, לרבות היקף המשרה, השכר, וסודיות המידע.'}
+};
+let SIG_AFTER=null;
+function openSign(cfg){
+  cfg=cfg||{};
+  let h,b;
+  if(cfg.title){h=cfg.docH||cfg.title;b=cfg.docB||'מסמך לחתימה דיגיטלית.';SIG_AFTER=cfg.after||null;document.getElementById('sig-title').textContent='חתימה · '+cfg.title;}
+  else{const x=LIFE[LIFE_STATE][SHEET_REF.sec][SHEET_REF.i];const doc=SIG_DOCS[x.t]||{h:x.t,b:'מסמך לחתימה דיגיטלית.'};h=doc.h;b=doc.b;SIG_AFTER=null;document.getElementById('sig-title').textContent='חתימה · '+doc.h;}
+  document.getElementById('sig-doc').innerHTML=`<h4>${h}</h4>${b}<div class="fine">מסמך זה נחתם באמצעות SynelSignature. החתימה, מועדה וכתובת ה-IP נשמרים ב-Audit Trail ומהווים ראיה לחתימה מרצון.</div>`;
+  document.getElementById('sig').classList.add('open');
+  setTimeout(sigInit,60);
+}
+function sigInit(){
+  const c=document.getElementById('sig-pad');
+  const r=c.getBoundingClientRect();c.width=r.width;c.height=r.height;
+  sigCtx=c.getContext('2d');sigCtx.lineWidth=2.6;sigCtx.lineCap='round';sigCtx.lineJoin='round';sigCtx.strokeStyle='#16294f';
+  sigDrawn=false;document.getElementById('sig-ok').disabled=true;document.getElementById('sig-hint').style.opacity=1;
+  const pos=e=>{const b=c.getBoundingClientRect();return{x:e.clientX-b.left,y:e.clientY-b.top};};
+  const start=e=>{e.preventDefault();sigDrawing=true;const p=pos(e);sigCtx.beginPath();sigCtx.moveTo(p.x,p.y);try{c.setPointerCapture(e.pointerId);}catch(_){}}; 
+  const move=e=>{if(!sigDrawing)return;e.preventDefault();const p=pos(e);sigCtx.lineTo(p.x,p.y);sigCtx.stroke();
+    if(!sigDrawn){sigDrawn=true;document.getElementById('sig-ok').disabled=false;document.getElementById('sig-hint').style.opacity=0;}};
+  const end=()=>{sigDrawing=false;};
+  c.onpointerdown=start;c.onpointermove=move;c.onpointerup=end;c.onpointercancel=end;c.onpointerleave=end;
+}
+function sigClear(){const c=document.getElementById('sig-pad');sigCtx.clearRect(0,0,c.width,c.height);sigDrawn=false;document.getElementById('sig-ok').disabled=true;document.getElementById('sig-hint').style.opacity=1;}
+function closeSign(){document.getElementById('sig').classList.remove('open');}
+function sigConfirm(){
+  if(!sigDrawn)return;
+  if(SIG_AFTER){const cb=SIG_AFTER;SIG_AFTER=null;closeSign();toast('נחתם בהצלחה ✓');cb();return;}
+  if(!SHEET_REF)return;
+  const x=LIFE[LIFE_STATE][SHEET_REF.sec][SHEET_REF.i];
+  completeItem(x,SHEET_REF.sec==='docs'?'נחתם':'הושלם','נחתם היום · '+today(),'המסמך "'+x.t+'" נחתם בהצלחה ותועד ב-Audit Trail');
+  closeSign();closeSheet();toast('נחתם בהצלחה ✓');
+}
+
+/* ---- Notification center ---- */
+let NOTIF_FILTER='all';
+let NOTIF=[
+  {ic:'✍️',bg:'#fff4e0',t:'מסמך ממתין לחתימתך',d:'עדכון תנאי העסקה — יעד 12/05/2025',time:'לפני 2 שעות',read:false,type:'task'},
+  {ic:'🎓',bg:'var(--vio-l)',t:'לומדה בתהליך',d:'אבטחת מידע · ריענון — הושלמו 60%',time:'אתמול',read:false,type:'learn'},
+  {ic:'👁️',bg:'#eef4fd',t:'הבקשה שלך נצפתה',d:'שירי לוי (HR) צפתה בבקשת עדכון הפרטים',time:'אתמול',read:false,type:'system'},
+  {ic:'✅',bg:'#e6f6ee',t:'טופס 101 אושר',d:'טופס 101 · 2026 עודכן ואושר במערכת',time:'12/05',read:true,type:'system'},
+  {ic:'🎖️',bg:'#fdeceb',t:'הסמכה לקראת פקיעה',d:'הסמכת בטיחות תפוג בעוד 21 ימים',time:'11/05',read:true,type:'task'}
+];
+const N_FILTERS=[['all','הכל'],['task','משימות'],['learn','לומדות'],['system','מערכת']];
+function unreadCount(){return NOTIF.filter(n=>!n.read).length;}
+function syncBadge(){const c=unreadCount();const b=document.getElementById('bell-badge');if(b){b.style.display=c?'flex':'none';b.textContent=c;}
+  const dr=document.getElementById('dr-nbadge');if(dr){dr.style.display=c?'flex':'none';dr.textContent=c;}}
+function addNotif(ic,bg,t,d,type){NOTIF.unshift({ic,bg,t,d,time:'כעת',read:false,type});syncBadge();}
+function openNotif(){renderNotif();document.getElementById('notif').classList.add('open');}
+function closeNotif(){document.getElementById('notif').classList.remove('open');}
+function markAllRead(){NOTIF.forEach(n=>n.read=true);renderNotif();syncBadge();toast('כל ההתראות סומנו כנקראו');}
+function notifTap(i){NOTIF[i].read=true;syncBadge();closeNotif();
+  if(NOTIF[i].type==='task'||NOTIF[i].type==='learn'){openLife();toast('פותח את האזור האישי');}
+  else renderNotif();}
+function renderNotif(){
+  document.getElementById('notif-filters').innerHTML=N_FILTERS.map(([k,l])=>
+    `<button class="${NOTIF_FILTER===k?'on':''}" onclick="NOTIF_FILTER='${k}';renderNotif()">${l}${k==='all'&&unreadCount()?` (${unreadCount()})`:''}</button>`).join('');
+  const list=NOTIF.map((n,i)=>({n,i})).filter(o=>NOTIF_FILTER==='all'||o.n.type===NOTIF_FILTER);
+  document.getElementById('notif-list').innerHTML = list.length ? list.map(({n,i})=>
+    `<div class="nrow ${n.read?'':'unread'}" onclick="notifTap(${i})">
+      <div class="ni" style="background:${n.bg}">${n.ic}</div>
+      <div class="nc"><span class="nt">${n.t}</span><div class="nd">${n.d}</div><div class="ntime">${n.time}</div></div>
+      ${n.read?'':'<span class="udot"></span>'}</div>`).join('')
+    : `<div class="ls-empty" style="margin-top:20px"><div class="ee">🔔</div><b>אין התראות</b><span>כאן יופיעו עדכונים חדשים</span></div>`;
+}
+syncBadge();
+
+/* =================================================================
+   LIFE EVENTS ENGINE — מנוע אירועי חיי העובד
+   כל אירוע = תת-תהליך: יזום ← אישור ← חתימה ← עדכון
+   ================================================================= */
+const EVENT_CAT={
+  scope:{ic:'📊',title:'שינוי היקף משרה',desc:'מעבר בין משרה מלאה לחלקית',
+    note:'האירוע נוגע גם בנוכחות וגם בשכר — עמית מתזמר בין שתי המערכות ומוודא תאימות תקן והפרדת סמכויות.',
+    doc:{h:'עדכון היקף משרה',b:'הריני מאשר/ת את שינוי היקף המשרה ואת עדכון התעריף והזכויות הנגזרות ממנו, בתוקף מתחילת החודש העוקב.'},
+    steps:[{n:'הגשת בקשה',k:'submit',d:'תיאור השינוי המבוקש'},{n:'אישור מנהל ישיר',k:'approve',who:'רונן לוי'},
+      {n:'אישור חשב/ת שכר',k:'approve',who:'ענת רוזן'},{n:'חתימה על עדכון תנאים',k:'sign'},{n:'עדכון בנוכחות ובשכר',k:'apply'}]},
+  family:{ic:'👶',title:'אירוע חיים · עדכון 101',desc:'לידה, נישואין או שינוי מצב משפחתי',
+    note:'שינוי במצב המשפחתי מחייב מילוי טופס 101 מחדש ומעדכן אוטומטית את נקודות הזיכוי לצורכי מס.',
+    doc:{h:'טופס 101 מעודכן',b:'הצהרה על עדכון פרטים אישיים ומצב משפחתי לצורכי מס. אני מצהיר/ה כי הפרטים נכונים ומלאים.'},
+    steps:[{n:'דיווח האירוע',k:'submit',d:'סוג האירוע ותאריכו'},{n:'מילוי טופס 101 מעודכן',k:'form'},
+      {n:'חתימה דיגיטלית',k:'sign'},{n:'עדכון נקודות זיכוי',k:'apply'}]},
+  cert:{ic:'🎖️',title:'ריענון הסמכה',desc:'חידוש הסמכה או רישיון שפג תוקפו',
+    note:'עמית עוקב אחר תוקף ההסמכות ויוזם ריענון לפני הפקיעה, כדי לשמור על ציות רציף.',
+    doc:{h:'אישור השלמת ריענון',b:'הריני מאשר/ת כי השלמתי את ריענון ההסמכה הנדרש במלואו.'},
+    steps:[{n:'תזכורת ריענון',k:'ack',d:'ההסמכה פגה בעוד 21 יום'},{n:'קביעת מועד ריענון',k:'schedule'},
+      {n:'השלמת הריענון',k:'complete'},{n:'עדכון תוקף ההסמכה',k:'apply'}]},
+  promo:{ic:'⭐',title:'קידום / שינוי תפקיד',desc:'שינוי תפקיד, דרגה או מחלקה',
+    note:'קידום עובר אישור HR ומעדכן את פרופיל העובד, ההרשאות ומסלול הפיתוח.',
+    doc:{h:'עדכון תפקיד',b:'הריני מאשר/ת את עדכון התפקיד והדרגה החדשים ואת התנאים הנלווים.'},
+    steps:[{n:'המלצת מנהל',k:'submit'},{n:'אישור HR',k:'approve',who:'שירי לוי'},{n:'חתימה על עדכון',k:'sign'},{n:'עדכון פרופיל והרשאות',k:'apply'}]},
+  letter:{ic:'📄',title:'בקשת אישור / מכתב',desc:'אישור העסקה, מכתב המלצה, אישור לבנק',
+    note:'האישור מופק על נייר חברה ונשלח אליך דיגיטלית לאחר אישור.',
+    steps:[{n:'בחירת סוג האישור',k:'submit'},{n:'הפקה ואישור',k:'approve',who:'שירי לוי'},{n:'המסמך מוכן להורדה',k:'apply'}]},
+  form101:{ic:'📝',title:'עדכון טופס 101',desc:'עדכון שנתי של נקודות זיכוי ופרטים אישיים',
+    note:'טופס 101 מתחדש כל שנת מס. עמית פותח אותו אוטומטית ומעדכן את נקודות הזיכוי מיד לאחר החתימה.',
+    doc:{h:'טופס 101 · שנת מס',b:'הצהרה על נקודות זיכוי ופרטים אישיים לצורכי מס. אני מצהיר/ה כי הפרטים נכונים ומלאים.'},
+    steps:[{n:'עדכון פרטים אישיים',k:'form'},{n:'חתימה דיגיטלית',k:'sign'},{n:'עדכון נקודות זיכוי',k:'apply'}]},
+  periodic:{ic:'🔐',title:'חתימה/הדרכה תקופתית',desc:'נוהל, אבטחת מידע או הדרכה מתחדשת',
+    note:'חתימות והדרכות מסוימות מתחדשות מדי שנה. עמית יוזם אותן במועד ושומר על ציות רציף.',
+    doc:{h:'אישור קריאה וחתימה',b:'הריני מאשר/ת כי קראתי את הנוהל/ההדרכה המעודכנים ואני מתחייב/ת לפעול לפיהם.'},
+    steps:[{n:'קריאת הנוהל המעודכן',k:'ack'},{n:'חתימה דיגיטלית',k:'sign'},{n:'עדכון תיעוד',k:'apply'}]}
+};
+const EVENTS={
+  vet:[
+    {id:11,type:'scope',step:1,waiting:true,extra:'שינוי היקף משרה · 100% ← 80%',started:'02/06/2025'},
+    {id:12,type:'cert',done:true,date:'05/2025',extra:'ריענון אבטחת מידע'},
+    {id:13,type:'family',done:true,date:'01/2024',extra:'עדכון מצב משפחתי · נישואין'},
+    {id:10,milestone:true,done:true,date:'01/03/2023',ic:'🚀',extra:'יום קליטה בחברה'}
+  ],
+  new:[
+    {id:20,milestone:true,done:true,date:'01/06/2025',ic:'🚀',extra:'תחילת תהליך קליטה'}
+  ]
+};
+/* shared approval queue (employee ↔ manager loop) */
+let APPROVALS=[
+  {id:900,empName:'מאיה כהן',empState:'vet',eventId:11,stepIdx:1,who:'מנהל ישיר · רונן לוי',
+   stepName:'אישור שינוי היקף משרה',title:'שינוי היקף משרה · 100% ← 80%',ic:'📊',requested:'לפני שעה',status:'pending'}
+];
+let APR_SEQ=900, EVT_REF=null, EVT_SEQ=100;
+function needsApproval(type){return (EVENT_CAT[type].steps||[]).some(s=>s.k==='approve');}
+function evTitle(e){return e.extra||(EVENT_CAT[e.type]?EVENT_CAT[e.type].title:'אירוע');}
+function evIcon(e){return e.ic||(EVENT_CAT[e.type]?EVENT_CAT[e.type].ic:'📌');}
+function evTag(type){return needsApproval(type)
+  ? '<span class="ev-tag ev-appr">דורש אישור</span>'
+  : '<span class="ev-tag ev-self">עצמאי · באפליקציה</span>';}
+
+function lifeEventsSection(){
+  const list=EVENTS[LIFE_STATE];
+  const active=list.filter(e=>!e.done&&!e.milestone);
+  const doneList=list.filter(e=>e.done);
+  const activeHTML=active.map(e=>{
+    const cat=EVENT_CAT[e.type];const total=cat.steps.length;const pct=Math.round(e.step/total*100);
+    const cur=cat.steps[e.step];
+    const status = e.rejected ? '⛔ נדחה — נדרש טיפול' : (e.waiting ? '⏳ ממתין לאישור '+(cur.who||'') : ('שלב '+(e.step+1)+' מתוך '+total+' · '+cur.n));
+    return `<div class="evt-active" style="${e.rejected?'border-inline-start-color:var(--red)':(e.waiting?'border-inline-start-color:var(--amber)':'')}"><div class="ea-top">
+        <div class="ea-ic">${evIcon(e)}</div>
+        <div class="ea-tt"><b>${evTitle(e)} ${evTag(e.type)}</b><span>${status}</span></div>
+      </div><div class="ea-bar"><i style="width:${pct}%"></i></div>
+      <button class="ea-cont" onclick="openEvt(${e.id})">${e.waiting?'צפייה בסטטוס':'המשך בתהליך'}</button></div>`;
+  }).join('');
+  const tlHTML = doneList.length
+    ? `<div class="tl tl-mob">${doneList.map(e=>`<div class="te"><span class="dt">${e.date}</span><b>${evIcon(e)} ${evTitle(e)}</b></div>`).join('')}</div>`
+    : '';
+  return `<div class="ls-sec"><div class="ls-sec-h"><b>מסע חיי העובד</b><a onclick="goHome();setTimeout(openActionPicker,260)">פתיחת פעולה →</a></div>
+    ${activeHTML}
+    ${tlHTML?`<div class="ls-sec-h" style="margin-top:14px"><b style="font-size:.86rem;color:var(--mut)">ציר זמן</b></div>${tlHTML}`:''}
+  </div>`;
+}
+
+/* unified action picker (from Home) — everything the employee initiates */
+function openActionPicker(){
+  SHEET_REF=null;
+  const quick=[
+    {ic:'🌴',t:'בקשת חופשה',d:'היעדרות עתידית',go:"routeAction('chat','אני רוצה לבקש חופשה')"},
+    {ic:'🤒',t:'דיווח מחלה',d:'ימי מחלה + אישור',go:"routeAction('chat','מחלה')"},
+    {ic:'🎖️',t:'מילואים',d:'דיווח שירות מילואים',go:"routeAction('chat','מילואים')"},
+    {ic:'💰',t:'צפייה בתלוש',d:'שכר החודש',go:"routeAction('chat','הצג לי את התלוש')"},
+    {ic:'📄',t:'בקשת אישור / מכתב',d:'אישור העסקה, מכתב לבנק',go:"routeAction('event','letter')"}
+  ];
+  const events=[
+    {ic:'📊',t:'שינוי היקף משרה',d:'מעבר בין מלאה לחלקית',go:"routeAction('event','scope')"},
+    {ic:'👶',t:'אירוע חיים · עדכון 101',d:'לידה, נישואין, מצב משפחתי',go:"routeAction('event','family')"},
+    {ic:'⭐',t:'קידום / שינוי תפקיד',d:'שינוי תפקיד או דרגה',go:"routeAction('event','promo')"}
+  ];
+  const row=x=>`<div class="ls-item" onclick="${x.go}"><div class="li-ic">${x.ic}</div>
+    <div class="li-tx"><b>${x.t}</b><span>${x.d}</span></div><span style="color:#c3cbdd;font-size:1.2rem">‹</span></div>`;
+  document.getElementById('sheet').innerHTML=`<div class="grab"></div>
+    <div class="sh-ic">✨</div><div class="sh-t">מה תרצה/י לעשות?</div>
+    <div class="sh-d">כל מה שאפשר ליזום — עמית ילווה אותך שלב-שלב.</div>
+    <div style="margin-top:14px" class="ls-sec-h"><b style="font-size:.82rem;color:var(--mut)">בקשות שכיחות</b></div>
+    ${quick.map(row).join('')}
+    <div style="margin-top:12px" class="ls-sec-h"><b style="font-size:.82rem;color:var(--mut)">אירועי חיי העובד</b></div>
+    ${events.map(row).join('')}
+    <button class="sh-sec" onclick="closeSheet()">ביטול</button>`;
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('sheet-mask').classList.add('open');
+}
+function routeAction(kind,arg){
+  closeSheet();
+  if(kind==='chat'){closeLife();openChat(arg);}
+  else if(kind==='event'){startEvent(arg);}
+}
+/* legacy alias */
+function openEventPicker(){openActionPicker();}
+function startEvent(type){
+  closeSheet();
+  const e={id:++EVT_SEQ,type,step:0,started:today()};
+  EVENTS[LIFE_STATE].unshift(e);
+  openEvt(e.id);
+}
+function findEvt(id){return EVENTS[LIFE_STATE].find(e=>e.id===id);}
+function openEvt(id){EVT_REF=id;renderEvt();document.getElementById('evt').classList.add('open');}
+function closeEvt(){document.getElementById('evt').classList.remove('open');EVT_REF=null;renderLife();}
+function renderEvt(){
+  const e=findEvt(EVT_REF);if(!e)return;const cat=EVENT_CAT[e.type];
+  document.getElementById('evt-ic').textContent=cat.ic;
+  document.getElementById('evt-title').innerHTML=evTitle(e)+' '+evTag(e.type);
+  document.getElementById('evt-sub').textContent=cat.desc;
+  const stepsHTML=cat.steps.map((s,i)=>{
+    let cls=i<e.step?'done':(i===e.step?'now':'todo');
+    if(i===e.step && e.waiting) cls='wait';
+    if(i===e.step && e.rejected) cls='rej';
+    let sub=s.d||'';
+    if(cls==='done')sub='הושלם';
+    else if(cls==='wait')sub='נשלח — ממתין לאישור '+(s.who||'');
+    else if(cls==='rej')sub='הבקשה נדחתה על ידי '+(s.who||'המאשר');
+    else if(cls==='now'&&s.who)sub='ידרוש אישור '+s.who;
+    else if(cls==='now'&&s.k==='sign')sub='נדרשת חתימה דיגיטלית';
+    return `<div class="step ${cls}"><div class="st-n">${s.n}</div>${sub?`<div class="st-d">${sub}</div>`:''}</div>`;
+  }).join('');
+  let banner='';
+  if(e.waiting)banner=`<div class="evt-wait">⏳ <span>הבקשה נשלחה ל<b>${cat.steps[e.step].who||'מאשר'}</b> וממתינה לאישור. תקבל/י התראה ברגע שתטופל — הסטטוס יתעדכן כאן אוטומטית.</span></div>`;
+  if(e.rejected)banner=`<div class="evt-rej">⛔ הבקשה נדחתה${e.rejReason?' — '+e.rejReason:''}. אפשר לתקן ולשלוח שוב לאישור.</div>`;
+  document.getElementById('evt-body').innerHTML=`
+    <div class="evt-note">💡 <span>${cat.note||''}</span></div>
+    <div class="steps">${stepsHTML}</div>${banner}`;
+  const cta=document.getElementById('evt-cta');
+  if(e.step>=cat.steps.length){cta.textContent='האירוע הושלם ✓';cta.className='done';cta.disabled=false;cta.onclick=closeEvt;}
+  else if(e.rejected){cta.textContent='שליחה מחדש לאישור';cta.className='rej';cta.disabled=false;cta.onclick=()=>{e.rejected=false;sendForApproval(e);};}
+  else if(e.waiting){cta.textContent='⏳ ממתין לאישור '+(cat.steps[e.step].who||'');cta.className='';cta.disabled=true;cta.onclick=null;}
+  else{
+    const s=cat.steps[e.step];
+    const lbl={submit:'הגשה',approve:'שליחה לאישור '+(s.who||''),sign:'✍️ חתימה עכשיו',form:'מילוי טופס 101',
+      ack:'הבנתי, המשך',schedule:'קביעת מועד ריענון',complete:'סימון כהושלם',apply:'עדכון במערכות'}[s.k]||'המשך';
+    cta.textContent=lbl;cta.className='';cta.disabled=false;cta.onclick=advanceEvt;
+  }
+}
+function advanceEvt(){
+  const e=findEvt(EVT_REF);if(!e)return;const cat=EVENT_CAT[e.type];const s=cat.steps[e.step];
+  if(s.k==='approve'){sendForApproval(e);return;}   // → real manager loop
+  if(s.k==='sign'){openSign({title:cat.doc?cat.doc.h:evTitle(e),docH:cat.doc&&cat.doc.h,docB:cat.doc&&cat.doc.b,after:()=>{_stepFwd(e,cat);}});return;}
+  if(s.k==='form'){toast('טופס 101 מולא ✓');}
+  else if(s.k==='schedule'){toast('נקבע מועד ריענון ✓');}
+  else if(s.k==='submit'){toast('הבקשה הוגשה ✓');}
+  _stepFwd(e,cat);
+}
+function _stepFwd(e,cat){
+  e.step++;
+  // if the new step is itself an approve step, auto-route it onward to the next approver
+  if(e.step<cat.steps.length && cat.steps[e.step].k==='approve'){sendForApproval(e);return;}
+  if(e.step>=cat.steps.length){
+    e.done=true;e.date=today();
+    addNotif('🔄','var(--vio-l)','אירוע הושלם ותועד','"'+evTitle(e)+'" עודכן בכל המערכות (נוכחות · שכר · פרופיל)','system');
+    toast('האירוע הושלם ועודכן ✓');
+  }
+  renderEvt();
+}
+/* employee → manager */
+function sendForApproval(e){
+  const cat=EVENT_CAT[e.type];const s=cat.steps[e.step];
+  e.waiting=true;
+  APPROVALS.unshift({id:++APR_SEQ,empName:(LIFE_STATE==='vet'?'מאיה כהן':'יואב לוי'),empState:LIFE_STATE,
+    eventId:e.id,stepIdx:e.step,who:s.who||'מאשר',stepName:s.n,title:evTitle(e),ic:evIcon(e),requested:'כעת',status:'pending'});
+  addNotif('📤','#eef4fd','הבקשה נשלחה לאישור','"'+evTitle(e)+'" ממתינה לאישור '+(s.who||''),'system');
+  toast('נשלח לאישור '+(s.who||''));
+  renderEvt();
+  if(document.getElementById('admin').classList.contains('open'))renderAdmin();
+}
+/* manager → employee */
+function approveReq(id){
+  const r=APPROVALS.find(a=>a.id===id);if(!r||r.status!=='pending')return;
+  r.status='approved';r.decided='אושר';
+  const e=EVENTS[r.empState].find(x=>x.id===r.eventId);
+  if(e){e.waiting=false;e.step++;
+    const cat=EVENT_CAT[e.type];
+    if(e.step<cat.steps.length && cat.steps[e.step].k==='approve'){
+      // chain to next approver automatically
+      const s=cat.steps[e.step];e.waiting=true;
+      APPROVALS.unshift({id:++APR_SEQ,empName:r.empName,empState:r.empState,eventId:e.id,stepIdx:e.step,
+        who:s.who||'מאשר',stepName:s.n,title:evTitle(e),ic:evIcon(e),requested:'כעת',status:'pending'});
+    }else if(e.step>=cat.steps.length){e.done=true;e.date=today();}
+    // notify the employee
+    NOTIF.unshift({ic:'✅',bg:'#e6f6ee',t:'הבקשה שלך אושרה',d:'"'+evTitle(e)+'" אושרה ע״י '+r.who,time:'כעת',read:false,type:'system'});
+    if(EVT_REF===e.id && document.getElementById('evt').classList.contains('open'))renderEvt();
+  }
+  syncBadge();renderAdmin();toast('הבקשה אושרה ✓');
+}
+function rejectReq(id){
+  const r=APPROVALS.find(a=>a.id===id);if(!r||r.status!=='pending')return;
+  r.status='rejected';r.decided='נדחה';
+  const e=EVENTS[r.empState].find(x=>x.id===r.eventId);
+  if(e){e.waiting=false;e.rejected=true;e.rejReason='לא אושר ע״י '+r.who;
+    NOTIF.unshift({ic:'⛔',bg:'#fdeceb',t:'הבקשה שלך נדחתה',d:'"'+evTitle(e)+'" נדחתה ע״י '+r.who,time:'כעת',read:false,type:'system'});
+    if(EVT_REF===e.id && document.getElementById('evt').classList.contains('open'))renderEvt();
+  }
+  syncBadge();renderAdmin();toast('הבקשה נדחתה');
+}
+function pendingCount(){return APPROVALS.filter(a=>a.status==='pending').length;}
+
+/* =================================================================
+   RECURRING EVENTS & EXPIRATIONS — עמית יוזם בעצמו
+   כל פריט עם תאריך → טריגר + התראה מדורגת + פתיחת התהליך הנכון
+   ================================================================= */
+const RECUR={
+  vet:[
+    {id:'r1',ic:'📝',title:'טופס 101 · שנת מס 2026',sub:'מתחדש כל שנת מס',type:'form101',due:'25/01/2026',left:24,stage:'soft',self:true},
+    {id:'r2',ic:'🎖️',title:'ריענון הסמכת בטיחות',sub:'הסמכה תפוג בקרוב',type:'cert',due:'22/07/2025',left:5,stage:'due',self:true},
+    {id:'r3',ic:'🔐',title:'חתימת אבטחת מידע שנתית',sub:'חתימה תקופתית',type:'periodic',due:'01/07/2026',left:0,stage:'today',self:true},
+    {id:'r4',ic:'🚗',title:'רישיון נהיגה · רכב חברה',sub:'קריטי לתפקיד · עלה גם למנהל',type:'periodic',due:'28/06/2026',left:-3,stage:'overdue',self:false,who:'שירי לוי'}
+  ],
+  new:[]
+};
+const STAGE_ORDER=['soft','due','today','overdue'];
+const STAGE_INFO={
+  soft:{chip:'rc-soft',lab:e=>'בעוד '+e.left+' ימים',note:'תזכורת מוקדמת — עוד יש זמן, אבל טוב לדעת.'},
+  due:{chip:'rc-due',lab:e=>'בעוד '+e.left+' ימים',note:'מתקרב — כדאי לטפל השבוע.'},
+  today:{chip:'rc-today',lab:()=>'היום',note:'התאריך הוא היום — מומלץ לסגור עכשיו.'},
+  overdue:{chip:'rc-overdue',lab:e=>'פג לפני '+(-e.left)+' ימים',note:'פג תוקף — חריגת ציות. הנושא עלה גם לדשבורד הניהולי.'}
+};
+function recStageCls(e){return 's-'+e.stage;}
+function recurSection(){
+  const list=RECUR[LIFE_STATE]||[];
+  if(!list.length)return '';
+  const rows=list.map(e=>{
+    const st=STAGE_INFO[e.stage];
+    return `<div class="rec-item ${recStageCls(e)}" onclick="openRecur('${e.id}')">
+      <div class="ri-ic">${e.ic}</div>
+      <div class="ri-tx"><b>${e.title}</b><span>${e.sub} · יעד ${e.due}</span></div>
+      <span class="rec-chip ${st.chip}">${st.lab(e)}</span></div>`;
+  }).join('');
+  return `<div class="ls-sec">
+    <div class="rec-head"><div class="av"><span class="avatar mini"></span></div>
+      <div><b>עמית יזם עבורך</b><span>דברים חוזרים ותוקפים שכדאי לסגור — עמית עוקב ומתריע מראש</span></div></div>
+    ${rows}</div>`;
+}
+function openRecur(id){
+  const e=(RECUR[LIFE_STATE]||[]).find(x=>x.id===id);if(!e)return;
+  const st=STAGE_INFO[e.stage];
+  const curIdx=STAGE_ORDER.indexOf(e.stage);
+  const escLabels=['30 יום','שבוע','היום','חריגה'];
+  const esc=STAGE_ORDER.map((s,i)=>`<div class="node ${i<=curIdx?'on':''} ${i===curIdx?'cur':''}"><i></i>${escLabels[i]}</div>`).join('');
+  const routing = e.self ? 'זהו אירוע עצמאי — תסגור/י אותו כאן באפליקציה.' : 'פריט קריטי לתפקיד — הנושא עלה גם לדשבורד ולתור האישורים של '+(e.who||'המנהל')+'.';
+  const actLabel={form101:'מילוי טופס 101',cert:'קביעת ריענון',periodic:'קריאה וחתימה'}[e.type]||'טיפול עכשיו';
+  document.getElementById('sheet').innerHTML=`<div class="grab"></div>
+    <div class="sh-ic">${e.ic}</div>
+    <div class="sh-t">${e.title} <span class="rec-chip ${st.chip}">${st.lab(e)}</span></div>
+    <div class="sh-d">${st.note}</div>
+    <div class="esc">${esc}</div>
+    <div class="sh-d" style="margin-top:4px">${routing}</div>
+    <div class="sh-meta">
+      <div class="r"><span>תאריך יעד</span><b>${e.due}</b></div>
+      <div class="r"><span>סוג</span><b>${e.self?'עצמאי · באפליקציה':'דורש אישור'}</b></div>
+      <div class="r"><span>יזם</span><b>עמית · אוטומטי</b></div>
+    </div>
+    <button class="sh-act" onclick="startRecur('${e.id}')">${actLabel}</button>
+    <button class="sh-sec" onclick="closeSheet()">אזכיר לי מאוחר יותר</button>`;
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('sheet-mask').classList.add('open');
+}
+function startRecur(id){
+  const arr=RECUR[LIFE_STATE]||[];const idx=arr.findIndex(x=>x.id===id);if(idx<0)return;
+  const e=arr[idx];const type=e.type;
+  arr.splice(idx,1);                      // moves from "Amit initiated" → active event
+  closeSheet();
+  const ev={id:++EVT_SEQ,type,step:0,started:today(),extra:e.title};
+  EVENTS[LIFE_STATE].unshift(ev);
+  addNotif('▶️','var(--vio-l)','התחלת טיפול','"'+e.title+'" נפתח לטיפול','system');
+  openEvt(ev.id);
+}
+/* seed staged notifications on load (Amit-initiated) */
+(function seedRecurNotifs(){
+  (RECUR.vet||[]).filter(e=>e.stage==='today'||e.stage==='overdue').forEach(e=>{
+    const urgent=e.stage==='overdue';
+    NOTIF.push({ic:e.ic,bg:urgent?'#fdeceb':'#ffe6d3',
+      t:urgent?'פריט פג תוקף — חריגה':'פריט לסגירה היום',
+      d:e.title+(urgent?' · פג לפני '+(-e.left)+' ימים':' · היום'),time:'הבוקר',read:false,type:'task'});
+  });
+  syncBadge();
+})();
+/* count of overdue critical items — surfaced to manager dashboard */
+function complianceOverdue(){return Object.values(RECUR).flat().filter(e=>e.stage==='overdue'&&!e.self).length;}
+
+/* dynamic escalation: urgent items climb to the Home screen */
+function renderHomeUrgent(){
+  const box=document.getElementById('home-urg');if(!box)return;
+  const items=[];
+  (RECUR.vet||[]).filter(e=>e.stage==='today'||e.stage==='overdue').forEach(e=>{
+    const over=e.stage==='overdue';
+    items.push({cls:over?'urg':'today',ic:e.ic,
+      t:e.title,
+      d:over?('פג לפני '+(-e.left)+' ימים · חריגה — כדאי לטפל'):('התאריך הוא היום · '+e.due),
+      go:`openLife();setTimeout(()=>openRecur('${e.id}'),280)`});
+  });
+  // seasonal: payslip ready around pay-day
+  items.push({cls:'pay',ic:'💰',t:'התלוש של החודש מוכן',d:'אפריל 2026 · זמין לצפייה',go:"openChat('הצג לי את התלוש')"});
+  box.innerHTML=items.map(x=>`<div class="hu-item ${x.cls}" onclick="${x.go}">
+    <div class="hu-ic">${x.ic}</div><div class="hu-tx"><b>${x.t}</b><span>${x.d}</span></div><div class="hu-go">‹</div></div>`).join('');
+}
+renderHomeUrgent();
+
+/* =================================================================
+   DESKTOP (manager) — team-level proactive Amit + compliance engine
+   ================================================================= */
+const TEAM_EXPIRE=[
+  {ic:'🎖️',emp:'אמיר גולד',dept:'מכירות',item:'ריענון הסמכת מכירות',due:'18/07/2025',left:5,stage:'due'},
+  {ic:'🔐',emp:'ליאור ממן',dept:'תמיכה',item:'חתימת אבטחת מידע שנתית',due:'01/07/2026',left:0,stage:'today'},
+  {ic:'🚗',emp:'מאיה כהן',dept:'שיווק',item:'רישיון נהיגה · רכב חברה',due:'28/06/2026',left:-3,stage:'overdue'},
+  {ic:'📋',emp:'שרון ביטון',dept:'תפעול',item:'ריענון נהלי בטיחות',due:'25/07/2025',left:12,stage:'soft'},
+  {ic:'🎖️',emp:'דנה כהן',dept:'משאבי אנוש',item:'הסמכת מגייסים',due:'02/07/2026',left:1,stage:'today'}
+];
+function teamOverdue(){return TEAM_EXPIRE.filter(e=>e.stage==='overdue').length;}
+function admProCard(){
+  const pend=pendingCount();
+  const exp=TEAM_EXPIRE.filter(e=>e.stage==='today'||e.stage==='overdue'||e.stage==='due').length;
+  return `<div class="adm-pro">
+    <div class="ap-av"><span class="avatar mini"></span></div>
+    <div class="ap-h"><b>עמית · סוכן ניהולי</b><span>תמונת מצב יזומה לצוות</span></div>
+    <div class="ap-items">
+      <div class="apx" onclick="admGo('appr')"><span class="n">${pend}</span><span class="t">בקשות<br>ממתינות לאישורך</span></div>
+      <div class="apx warn" onclick="admScrollCmp()"><span class="n">${exp}</span><span class="t">פקיעות ציות<br>מתקרבות בצוות</span></div>
+      <div class="apx crit" onclick="admScrollCmp()"><span class="n">${teamOverdue()}</span><span class="t">חריגות<br>שדורשות טיפול</span></div>
+      <div class="apx" onclick="toast('עונת טופס 101 — עמית יכין תזכורת ל-40 עובדים')"><span class="n">40</span><span class="t">עובדים · עונת<br>טופס 101 מתקרבת</span></div>
+    </div></div>`;
+}
+function teamComplianceHTML(){
+  const order={overdue:0,today:1,due:2,soft:3};
+  const list=[...TEAM_EXPIRE].sort((a,b)=>order[a.stage]-order[b.stage]);
+  const rows=list.map(e=>{
+    const st=STAGE_INFO[e.stage];
+    const btns = e.stage==='overdue'
+      ? `<button class="p" onclick="toast('נפתח טיפול מול ${e.emp} — ${e.item}')">פתיחת טיפול</button><button onclick="toast('תזכורת נשלחה ל${e.emp}')">תזכורת</button>`
+      : `<button onclick="toast('תזכורת נשלחה ל${e.emp}')">שליחת תזכורת</button>`;
+    return `<div class="cmp-row">
+      <div class="cmp-ic">${e.ic}</div>
+      <div class="cmp-tx"><b>${e.item}</b><span>${e.emp} · ${e.dept} · יעד ${e.due}</span></div>
+      <span class="cmp-chip ${st.chip}">${st.lab(e)}</span>
+      <div class="cmp-btns">${btns}</div></div>`;
+  }).join('');
+  return `<div class="panel" id="cmp-panel" style="margin-bottom:22px"><h3>פקיעות וציות · תמונת צוות <a onclick="toast('ייצוא — דמו')">ייצוא ⭳</a></h3>
+    <div style="font-size:.82rem;color:var(--mut);margin:-8px 0 12px">עמית עוקב אחר תוקף ההסמכות והחתימות בכל המחלקה, ומתריע לפני שהן הופכות לחריגה.</div>
+    ${rows}</div>`;
+}
+function admScrollCmp(){const el=document.getElementById('cmp-panel');if(el)el.scrollIntoView({behavior:'smooth',block:'center'});}
+
+/* drawer menu — authentic Synel Harmony structure (from real app) */
+const DR_GROUPS=[
+  {label:'נוכחות ודיווח',items:[
+    ['📊','דו"חות נוכחות','reports'],
+    ['🌴','היעדרות עתידית','absences']]},
+  {label:'שכר ומסמכים',items:[
+    ['💰','הצגת תלושי שכר','payslips'],
+    ['📝','טופס 101','f101'],
+    ['📄','הצגת טופס 106','f106'],
+    ['📁','המסמכים שלי','mydocs']]},
+  {label:'העובד שלי',items:[
+    ['🪪','דוח כרטיס עובד','empcard'],
+    ['🗺️','מסע חיי העובד','timeline'],
+    ['🎓','הלומדות שלי','learning'],
+    ['📇','פרטי קשר','contacts']]},
+  {label:'כללי',items:[
+    ['🔔','התראות','notif',1],
+    ['⚙️','הגדרות','settings'],
+    ['ℹ️','אודות','about']]}
+];
+document.getElementById('dr-menu').innerHTML=DR_GROUPS.map(g=>
+  `<div class="dr-glab">${g.label}</div>`+g.items.map(([i,t,act,badge])=>
+    `<button onclick="drAct('${act}')"><span class="di">${i}</span>${t}${badge?'<span class="dn" id="dr-nbadge"></span>':''}<span class="dchev">‹</span></button>`).join('')
+).join('');
+syncBadge();
+setTimeout(()=>{if(typeof applyRole==='function')applyRole();},0);
+function drAct(key){
+  closeDrawer();
+  const direct={
+    payslips:()=>{closeLife();openChat('הצג לי את התלוש');},
+    mydocs:()=>openLife(), timeline:()=>openLife(), learning:()=>openLife(),
+    notif:()=>openNotif()
+  }[key];
+  setTimeout(()=> direct?direct():openPage(key), 200);
+}
+
+/* ---- authentic destination screens ---- */
+function pgSel(label,val){return `<div class="pg-field"><label>${label}</label><div class="pg-sel">${val}<span class="cr">▾</span></div></div>`;}
+const PAGES={
+  reports:{t:'דו"חות',b:`
+    <div class="pg-listitem" style="border-inline-start:4px solid var(--cyan)"><div class="li-av">📊</div><div><b>דו"חות נוכחות</b><span>שעות, יתרות ודיווחים חודשיים</span></div><span class="dchev" style="margin-inline-start:auto">✓</span></div>
+    <div class="pg-listitem" onclick="drAct('empcard')"><div class="li-av">🪪</div><div><b>דוח כרטיס עובד</b><span>תמונת מצב מלאה של הכרטיס</span></div></div>`},
+  absences:{t:'היעדרות עתידית',s:'רשימת יתרות',b:`
+    <div class="pg-card">
+      <div class="pg-row"><span class="k">יום בחירה</span><span class="v">0.61 ימים</span></div>
+      <div class="pg-row"><span class="k">טסט</span><span class="v">0.00 ימים</span></div>
+      <div class="pg-row"><span class="k">חופשה</span><span class="v">0.00 ימים</span></div>
+      <div class="pg-row"><span class="k">Sickness</span><span class="v">0.00 ימים</span></div>
+    </div>
+    <div class="pg-note">0 היעדרויות מתוכננות</div>
+    <button class="pg-btn" onclick="closePage();routeAction('chat','אני רוצה לבקש חופשה')">＋ הוספת היעדרות</button>`},
+  f101:{t:'טופס 101',b:`
+    <div style="display:flex;gap:12px">${pgSel('מ שנה','2026')}${pgSel('עד שנה','2026')}</div>
+    <div class="pg-card">
+      <div class="pg-row"><span class="k">שנה</span><span class="v">2026</span></div>
+      <div class="pg-row"><span class="k">עודכן על ידי</span><span class="v">מאיה כהן</span></div>
+      <div class="pg-row"><span class="k">תאריך עדכון</span><span class="v">01/03/2026 21:46</span></div>
+      <div class="pg-row"><span class="k">הערות</span><span class="v">—</span></div>
+      <div class="pg-row"><span class="k">גירסה</span><span class="v">1</span></div>
+    </div>
+    <button class="pg-btn" onclick="toast('מצב עריכה — דמו')">מצב עריכה</button>`},
+  f106:{t:'הצגת טופס 106',b:`
+    ${pgSel('מ שנה','2025')}
+    <button class="pg-btn" style="background:#4a6ea8" onclick="toast('מציג טופס 106 לשנת 2025 — דמו')">תצוגה</button>`},
+  empcard:{t:'דוח כרטיס עובד',b:`
+    <div class="pg-card">
+      <div class="pg-row"><span class="k">שם עובד</span><span class="v">מאיה כהן · 99120</span></div>
+      <div class="pg-row"><span class="k">תפקיד</span><span class="v">מנהלת שיווק דיגיטלי</span></div>
+      <div class="pg-row"><span class="k">מחלקה</span><span class="v">שיווק</span></div>
+      <div class="pg-row"><span class="k">תחילת עבודה</span><span class="v">01/03/2023</span></div>
+      <div class="pg-row"><span class="k">היקף משרה</span><span class="v">100%</span></div>
+      <div class="pg-row"><span class="k">מנהל ישיר</span><span class="v">רונן לוי</span></div>
+    </div>
+    <div class="pg-note">לצפייה בכרטיס המלא והיסטוריית האירועים — במשטח הניהולי בדסקטופ.</div>`},
+  contacts:{t:'פרטי קשר',b:`
+    <div class="pg-listitem"><div class="li-av">🙍</div><div><b>מאיה כהן</b><span>99120 · שיווק דיגיטלי</span></div></div>
+    <div class="pg-listitem"><div class="li-av">👤</div><div><b>רונן לוי</b><span>מנהל ישיר</span></div></div>
+    <div class="pg-listitem"><div class="li-av">👤</div><div><b>שירי לוי</b><span>משאבי אנוש</span></div></div>
+    <div class="pg-listitem"><div class="li-av">👤</div><div><b>ענת רוזן</b><span>חשבת שכר</span></div></div>`},
+  settings:{t:'הגדרות',s:'הגדרות חיבור',b:`
+    <div class="pg-card">
+      <div class="pg-toggle"><b>Portal Mode</b><div class="sw" onclick="this.classList.toggle('on')"><i></i></div></div>
+    </div>
+    <div class="pg-field"><label>שרת</label><input class="pg-input" value="harmony-srv.synel.co.il" readonly></div>
+    <div class="pg-field"><label>פורט</label><input class="pg-input" value="443" readonly></div>
+    <div class="pg-card"><div class="pg-toggle"><b>HTTPS</b><div class="sw on" onclick="this.classList.toggle('on')"><i></i></div></div></div>
+    <button class="pg-btn" onclick="toast('ההגדרות נשמרו ✓')">שמירה</button>`},
+  about:{t:'Application Information',b:`
+    <div class="pg-card">
+      <div class="pg-row"><span class="k">גרסת הרמוני</span><span class="v">15 · Build_2060</span></div>
+      <div class="pg-row"><span class="k">גרסת אפליקציה</span><span class="v">15.2606.03.2642</span></div>
+      <div class="pg-row"><span class="k">פרטי עובד/ת</span><span class="v">99120, מאיה כהן</span></div>
+      <div class="pg-row"><span class="k">מחלקה</span><span class="v">שיווק</span></div>
+      <div class="pg-row"><span class="k">פרופיל משתמש</span><span class="v">WEB</span></div>
+    </div>`}
+};
+function openPage(key){
+  const pg=PAGES[key];if(!pg){toast('בקרוב');return;}
+  document.getElementById('page-title').textContent=pg.t;
+  document.getElementById('page-sub').textContent=pg.s||'';
+  document.getElementById('page-body').innerHTML=pg.b;
+  document.getElementById('page').classList.add('open');
+}
+function closePage(){document.getElementById('page').classList.remove('open');}
+
+/* =================================================================
+   ADMIN — Dashboard ניהולי + כרטיס עובד (full screen)
+   ================================================================= */
+let ADM_VIEW='dash';
+/* ---- permission role (device-independent): 'emp' | 'mgr' ---- */
+let ROLE='mgr';
+function setRole(r){ROLE=r;applyRole();toast(r==='mgr'?'תצוגת מנהל / HR':'תצוגת עובד — אזור המנהל מוסתר');}
+function applyRole(){
+  const isMgr=ROLE==='mgr';
+  const btn=document.getElementById('bnav-admin');if(btn)btn.style.display=isMgr?'':'none';
+  if(!isMgr) closeAdmin();
+  const e=document.getElementById('rsw-emp'),m=document.getElementById('rsw-mgr');
+  if(e)e.classList.toggle('on',!isMgr); if(m)m.classList.toggle('on',isMgr);
+  const rl=document.getElementById('dr-rl');if(rl)rl.textContent=isMgr?'מנהלת שיווק דיגיטלי · הרשאת מנהל':'מנהלת שיווק דיגיטלי · הרשאת עובד';
+}
+function openAdmin(){if(ROLE!=='mgr'){toast('אין הרשאת מנהל');return;}document.getElementById('admin').classList.add('open');renderAdmin();}
+function closeAdmin(){document.getElementById('admin').classList.remove('open');}
+const ADM_NAV=[['🏠','ראשי','dash'],['👥','עובדים','emp'],['📥','אישורים','appr'],['🗂️','תהליכים'],['📁','מסמכים'],
+  ['📊','דוחות'],['🔔','התראות',0,12],['⚙️','הגדרות']];
+function admGo(v){if(v){ADM_VIEW=v;renderAdmin();}else{toast('המסך בבנייה — דמו');}}
+function donut(segs,size){ // segs: [{v,color}]
+  const r=50,c=2*Math.PI*r,tot=segs.reduce((a,s)=>a+s.v,0);let off=0;let circles='';
+  segs.forEach(s=>{const len=c*s.v/tot;circles+=`<circle cx="59" cy="59" r="${r}" fill="none" stroke="${s.color}" stroke-width="12" stroke-dasharray="${len} ${c-len}" stroke-dashoffset="${-off}" transform="rotate(-90 59 59)"/>`;off+=len;});
+  return `<svg width="${size||120}" height="${size||120}" viewBox="0 0 118 118"><circle cx="59" cy="59" r="${r}" fill="none" stroke="#eef1f6" stroke-width="12"/>${circles}</svg>`;
+}
+function renderAdmin(){
+  const pend=pendingCount();
+  document.getElementById('adm-nav').innerHTML=ADM_NAV.map(([i,t,v,n])=>{
+    const badge = v==='appr' ? (pend||'') : (n||'');
+    return `<button class="${(v===ADM_VIEW)?'on':''}" onclick="admGo('${v||''}')"><span class="ai">${i}</span>${t}${badge?`<span class="abadge">${badge}</span>`:''}</button>`;}).join('');
+  document.getElementById('adm-title').innerHTML =
+    ADM_VIEW==='dash' ? 'Dashboard ניהולי<small>תמונת מצב כללית · מרכז שליטה HR</small>'
+    : ADM_VIEW==='appr' ? 'אישורים<small>בקשות עובדים הממתינות להחלטתך</small>'
+    : 'כרטיס עובד<small>דשבורד ניהולי › עובדים › כרטיס עובד</small>';
+  document.getElementById('adm-view').innerHTML =
+    ADM_VIEW==='dash' ? dashHTML() : ADM_VIEW==='appr' ? apprHTML() : empHTML();
+}
+function apprHTML(){
+  const pend=APPROVALS.filter(a=>a.status==='pending');
+  const hist=APPROVALS.filter(a=>a.status!=='pending');
+  const pendHTML = pend.length ? pend.map(r=>`
+    <div class="appr-card rq"><div class="appr-ic">${r.ic}</div>
+      <div class="appr-tx"><b>${r.title}</b>
+        <div class="sub">${r.empName} · ${r.stepName}</div>
+        <div class="meta">מיועד ל: ${r.who} · הוגש ${r.requested}</div></div>
+      <div class="appr-btns">
+        <button class="appr-ok" onclick="approveReq(${r.id})">אישור</button>
+        <button class="appr-no" onclick="rejectReq(${r.id})">דחייה</button>
+      </div></div>`).join('')
+    : `<div class="appr-empty"><div class="ei">✅</div><b>אין בקשות ממתינות</b><span>בקשות עובדים יופיעו כאן לאישורך</span></div>`;
+  const histHTML = hist.length ? `<div class="panel" style="margin-top:20px"><h3>היסטוריית החלטות</h3>${
+    hist.map(r=>`<div class="appr-card appr-hist" style="border-inline-start-color:${r.status==='approved'?'var(--green)':'var(--red)'};margin-bottom:9px">
+      <div class="appr-ic">${r.ic}</div><div class="appr-tx"><b>${r.title}</b><div class="sub">${r.empName} · ${r.stepName}</div></div>
+      <span class="st-tag ${r.status==='approved'?'st-active':'st-off'}">${r.decided}</span></div>`).join('')}</div>` : '';
+  return `<div class="adm-body">
+    <div class="adm-actbar"><div class="adm-pill" style="background:#fff4e0;border-color:#f3d2a0;color:#9a6a12">📥 ${pend.length} ממתינות</div>
+      <div class="adm-pill">הפרדת סמכויות פעילה · מאשר ≠ מבקש</div></div>
+    ${pendHTML}${histHTML}</div>`;
+}
+
+/* ---- Dashboard ---- */
+function dashHTML(){
+  const kpis=[
+    {n:23,l:'עובדים בתהליך קליטה',s:'+12% מכלל העובדים',sc:'#5b6b86',ic:'👋',bg:'var(--vio-l)',cc:'var(--vio-d)'},
+    {n:8,l:'עובדים בתהליך עזיבה',s:'5% מכלל העובדים',sc:'#5b6b86',ic:'👋',bg:'#fff4e0',cc:'var(--amber-d)'},
+    {n:156,l:'משימות פתוחות',s:'+18 מהשבוע שעבר',sc:'#c0392b',ic:'✅',bg:'#eef4fd',cc:'#2f6fd0'},
+    {n:98,l:'מסמכים לחתימה',s:'−7 מהשבוע שעבר',sc:'#1f7a52',ic:'📄',bg:'#e6f6ee',cc:'var(--green)'},
+    {n:64,l:'הדרכות שלא הושלמו',s:'+11 מהשבוע שעבר',sc:'#c0392b',ic:'🎓',bg:'#fff4e0',cc:'var(--amber-d)'},
+    {n:15,l:'חריגות וסיכוני ציות',s:'דורש טיפול',sc:'#c0392b',ic:'🛡️',bg:'#fdeceb',cc:'var(--red)'},
+    {n:192,l:'עובדים פעילים',s:'+3 החודש',sc:'#1f7a52',ic:'👥',bg:'var(--vio-l)',cc:'var(--vio-d)'},
+    {n:9,l:'הסמכות שפגו',s:'תוך 30 יום',sc:'var(--amber-d)',ic:'🎖️',bg:'#eef4fd',cc:'#2f6fd0'}];
+  const rows=[
+    ['מאיה כהן','מנהלת שיווק דיגיטלי','שיווק',['פעיל','st-active'],'אין',1,0,'<span class="warn-i">⚠️ 1</span>','היום 09:15'],
+    ['יואב לוי','מפתח תוכנה','פיתוח',['בתהליך קליטה','st-onb'],'קליטה',4,2,'<span class="warn-r">⚠️ 1</span>','היום 08:45'],
+    ['דנה כהן','רכזת גיוס','משאבי אנוש',['פעיל','st-active'],'אין',0,1,'-','אתמול 16:30'],
+    ['אורי פרץ','מנהל פרויקטים','פרויקטים',['פעיל','st-active'],'אין',0,0,'-','אתמול 14:20'],
+    ['שרון ביטון','מנהלת אדמיניסטרציה','תפעול',['בתהליך עזיבה','st-off'],'עזיבה',3,1,'<span class="warn-r">⚠️ 2</span>','12/05/2025'],
+    ['אמיר גולד','מנהל מכירות','מכירות',['פעיל','st-active'],'אין',1,2,'-','11/05/2025'],
+    ['ליאור ממן','תומך טכני','תמיכה',['פעיל','st-active'],'אין',0,0,'-','11/05/2025'],
+    ['ענת רוזן','חשבת שכר','כספים',['פעיל','st-active'],'אין',1,0,'-','10/05/2025']];
+  const exc=[['#e0473a','🔴','חוזה העסקה לא חתום',7],['#e0473a','🔴','טופס 101 לא הושלם',5],
+    ['#e0473a','🔴','NDA לא חתום',3],['#f0a01f','🟠','הדרכת אבטחת מידע פגה',4],['#f0a01f','🟠','ריענון הסמכה נדרש',2]];
+  return `
+  <div class="adm-body">
+    <div class="adm-actbar">
+      <button class="adm-btn">＋ פעולה מהירה</button>
+      <button class="adm-btn ghost">⛃ סינונים</button>
+      <div class="adm-daterange">
+        <span class="adm-pill">📅 12/05/2025</span>
+        <span class="adm-pill">טווח תאריכים ▾</span>
+      </div>
+    </div>
+    ${admProCard()}
+    <div class="kpi-row">
+      ${kpis.map(k=>`<div class="kpi"><div class="k-ic" style="background:${k.bg};color:${k.cc}">${k.ic}</div>
+        <div class="k-num">${k.n}</div><div class="k-lab">${k.l}</div>
+        <div class="k-sub" style="color:${k.sc}">${k.s}</div><span class="lnk">לצפייה בפרטים</span></div>`).join('')}
+    </div>
+    ${teamComplianceHTML()}
+    <div class="adm-grid g4">
+      <div class="panel"><h3>סטטוס תהליכים</h3><div class="donut-wrap">
+        <div class="donut2">${donut([{v:23,color:'#2f9e6b'},{v:18,color:'#6d5ef7'},{v:7,color:'#f0a01f'},{v:3,color:'#e0473a'}])}
+          <div class="mid"><b>51</b><span>תהליכים פעילים</span></div></div>
+        <div class="leg">
+          <div class="lr"><span class="dot" style="background:#2f9e6b"></span>הושלם<span class="v">23 (45%)</span></div>
+          <div class="lr"><span class="dot" style="background:#6d5ef7"></span>בתהליך<span class="v">18 (35%)</span></div>
+          <div class="lr"><span class="dot" style="background:#f0a01f"></span>ממתין לפעולה<span class="v">7 (14%)</span></div>
+          <div class="lr"><span class="dot" style="background:#e0473a"></span>בחריגה<span class="v">3 (6%)</span></div>
+        </div></div></div>
+      <div class="panel"><h3>התפלגות עובדים</h3><div class="donut-wrap">
+        <div class="donut2">${donut([{v:75,color:'#6d5ef7'},{v:9,color:'#27c2dd'},{v:6,color:'#8b7ffb'},{v:4,color:'#f0a01f'},{v:6,color:'#c3cbdd'}])}
+          <div class="mid"><b>192</b><span>סה״כ</span></div></div>
+        <div class="leg">
+          <div class="lr"><span class="dot" style="background:#6d5ef7"></span>פעילים<span class="v">192</span></div>
+          <div class="lr"><span class="dot" style="background:#27c2dd"></span>בחופשה<span class="v">18</span></div>
+          <div class="lr"><span class="dot" style="background:#8b7ffb"></span>מושהים<span class="v">12</span></div>
+          <div class="lr"><span class="dot" style="background:#f0a01f"></span>בתהליך עזיבה<span class="v">8</span></div>
+        </div></div></div>
+      <div class="panel"><h3>הדרכות והסמכות</h3>
+        <div class="barrow"><div class="bl">השלמת הדרכות חובה<b>72%</b></div><div class="bartr"><i style="width:72%;background:#6d5ef7"></i></div></div>
+        <div class="barrow"><div class="bl">הסמכות בתוקף<b>86%</b></div><div class="bartr"><i style="width:86%;background:#2f9e6b"></i></div></div>
+        <div class="barrow"><div class="bl">ריענונים נדרשים (30 יום)<b>14</b></div><div class="bartr"><i style="width:35%;background:#e0473a"></i></div></div>
+      </div>
+      <div class="panel"><h3>חריגות עיקריות<a>לכל החריגות</a></h3><div class="alist">
+        ${exc.map(([c,e,t,n])=>`<div class="ar"><span class="a-ic" style="background:${c}22">${e}</span>${t}<span class="a-n">${n}</span></div>`).join('')}
+      </div></div>
+    </div>
+    <div class="adm-grid g2-3">
+      <div class="panel"><h3>עובדים · תמונת מצב<a>ייצוא לאקסל ⭳</a></h3>
+        <table class="adm-table"><thead><tr>
+          <th>שם עובד</th><th>תפקיד</th><th>מחלקה</th><th>סטטוס</th><th>תהליך פעיל</th><th>מסמכים</th><th>הדרכות</th><th>חריגות</th><th>עדכון אחרון</th>
+        </tr></thead><tbody>
+        ${rows.map(r=>`<tr onclick="admGo('emp')" style="cursor:pointer">
+          <td><div class="emp"><span class="avatar ph"></span><b>${r[0]}</b></div></td>
+          <td>${r[1]}</td><td>${r[2]}</td><td><span class="st-tag ${r[3][1]}">${r[3][0]}</span></td>
+          <td>${r[4]}</td><td>${r[5]}</td><td>${r[6]}</td><td>${r[7]}</td><td>${r[8]}</td></tr>`).join('')}
+        <tr><td colspan="9" class="allrow">לצפייה בכל העובדים ▾</td></tr>
+        </tbody></table></div>
+      <div>
+        <div class="panel" style="margin-bottom:16px"><h3>תזכורות ותזמורות</h3><div class="alist">
+          <div class="ar" onclick="admGo('appr')" style="cursor:pointer"><span class="a-ic" style="background:#fff4e0">📥</span>בקשות הממתינות לאישורך<span class="a-n">${pendingCount()}</span></div>
+          <div class="ar"><span class="a-ic" style="background:#fdeceb">🛡️</span>פקיעות/ריענונים באיחור<span class="a-n">${complianceOverdue()}</span></div>
+          <div class="ar"><span class="a-ic" style="background:#fff4e0">⏰</span>משימות באיחור<span class="a-n">8</span></div>
+          <div class="ar"><span class="a-ic" style="background:#e6f6ee">🎓</span>הדרכות שהוקצו<span class="a-n">7</span></div>
+        </div></div>
+        <div class="panel"><h3>פעולות מהירות</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button class="adm-btn ghost">✈️ שליחת מסמך</button>
+            <button class="adm-btn ghost">🎓 שיוך הדרכה</button>
+            <button class="adm-btn ghost">🗂️ פתיחת תהליך</button>
+            <button class="adm-btn ghost">🔔 שליחת תזכורת</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ---- Employee card (two states) ---- */
+let EMP_STATE='vet';
+function empToggle(s){EMP_STATE=s;renderAdmin();}
+function ep(title,body){return `<div class="panel"><h3>${title}</h3>${body}</div>`;}
+function empty(txt){return `<div class="empty-panel"><div class="ei">🗂️</div><b>אין נתונים להצגה כרגע</b><span>${txt}</span></div>`;}
+function empHTML(){
+  const veteran = EMP_STATE==='vet';
+  const stateSwitch=`<span class="ec-state">
+    <button class="${veteran?'on':''}" onclick="empToggle('vet')">עובד ותיק</button>
+    <button class="${!veteran?'on':''}" onclick="empToggle('new')">עובד חדש</button></span>`;
+  const head = veteran ? `
+    <div class="ec-head"><div class="ec-av"><span class="avatar"></span></div>
+      <div class="ec-id"><div class="nm">מאיה כהן <span class="st-tag st-active">פעילה ▾</span></div>
+        <div class="rl">מנהלת שיווק דיגיטלי · מחלקת שיווק</div>
+        <div class="contact"><span>✉️ maya.cohen@synel.co.il</span><span>📞 054-1234567</span></div>
+      </div>
+      <div class="ec-facts">
+        <div class="ec-fact"><span>תאריך קליטה</span><b>01/03/2023</b></div>
+        <div class="ec-fact"><span>ותק</span><b>2.3 שנים</b></div>
+        <div class="ec-fact"><span>מנהל ישיר</span><b>שי כהן</b></div>
+        <div class="ec-fact"><span>אתר</span><b>ת״א · מטה</b></div>
+      </div>${stateSwitch}</div>` : `
+    <div class="ec-head"><div class="ec-av"><span class="avatar ph"></span></div>
+      <div class="ec-id"><div class="nm">יואב לוי <span class="st-tag st-onb">בתהליך קליטה</span></div>
+        <div class="rl">מפתח תוכנה · מחלקת פיתוח</div>
+        <div class="contact"><span>✉️ —</span><span>📞 —</span></div>
+      </div>
+      <div class="ec-facts">
+        <div class="ec-fact"><span>תאריך התחלה</span><b>01/06/2025</b></div>
+        <div class="ec-fact"><span>ותק</span><b>—</b></div>
+        <div class="ec-fact"><span>מנהל ישיר</span><b>דנה כהן</b></div>
+        <div class="ec-fact"><span>אתר</span><b>—</b></div>
+      </div>${stateSwitch}</div>`;
+  const kpi = veteran
+    ? [['87%','מצב כללי','var(--green)'],['6','משימות פתוחות','var(--amber-d)'],['3','מסמכים לחתימה','#2f6fd0'],['2','לומדות פתוחות','var(--vio-d)'],['1','הסמכות שפגות','var(--red)'],['1','תהליכים פעילים','var(--vio-d)']]
+    : [['0%','מצב כללי','var(--mut)'],['0','משימות פתוחות','var(--mut)'],['0','מסמכים לחתימה','var(--mut)'],['0','לומדות פתוחות','var(--mut)'],['0','הסמכות שפגות','var(--mut)'],['1','תהליכים פעילים','var(--vio-d)']];
+  const kpiRow=`<div class="kpi-row" style="grid-template-columns:repeat(6,1fr)">
+    ${kpi.map(k=>`<div class="kpi" style="text-align:center"><div class="k-num" style="color:${k[2]}">${k[0]}</div><div class="k-lab">${k[1]}</div></div>`).join('')}</div>`;
+
+  let panels;
+  if(veteran){
+    const details=`<table class="kv">
+      <tr><td>שם מלא</td><td>מאיה כהן</td></tr><tr><td>ת״ז</td><td>307654321</td></tr>
+      <tr><td>תפקיד</td><td>מנהלת שיווק דיגיטלי</td></tr><tr><td>מחלקה</td><td>שיווק</td></tr>
+      <tr><td>מנהל ישיר</td><td>שי כהן</td></tr><tr><td>אתר</td><td>ת״א · מטה</td></tr>
+      <tr><td>אימייל</td><td>maya.cohen@synel.co.il</td></tr><tr><td>טלפון</td><td>054-1234567</td></tr>
+      <tr><td>סוג העסקה</td><td>עובדת קבועה</td></tr><tr><td>שכר בסיסי</td><td>24,500 ₪</td></tr></table>`;
+    const tasks=[['חתימה על עדכון חוזה העסקה','יעד: 15/05/2025','דחוף','lc-miss'],
+      ['השלמת לומדת אבטחת מידע','יעד: 20/05/2025','בינוני','lc-todo'],
+      ['העלאת אישור תעודה מקצועית','יעד: 30/05/2025','נמוך','lc-none'],
+      ['מילוי טופס עדכון פרטים אישיים','ללא תאריך יעד','בוצע','lc-done']];
+    const taskHTML=tasks.map(t=>`<div class="doc-row"><div class="li-ic" style="background:var(--vio-l);width:34px;height:34px;border-radius:9px">📋</div><div class="dn"><b>${t[0]}</b><span>${t[1]}</span></div><span class="ls-chip ${t[3]}">${t[2]}</span></div>`).join('');
+    const docs=[['חוזה העסקה.pdf','נשלח 12/05/2025','ממתין','lc-todo'],['הודעה לעובד.pdf','נשלח 10/05/2025','נחתם חלקית','lc-prog'],['טופס 101.pdf','נשלח 05/05/2025','נחתם','lc-done'],['NDA.pdf','נשלח 05/05/2025','נחתם','lc-done']];
+    const docHTML=docs.map(d=>`<div class="doc-row"><div class="df">PDF</div><div class="dn"><b>${d[0]}</b><span>${d[1]}</span></div><span class="ls-chip ${d[3]}">${d[2]}</span></div>`).join('');
+    const bars=[['אבטחת מידע',75,'#6d5ef7'],['ציות ל-GDPR',40,'#6d5ef7'],['שיווק דיגיטלי מתקדם',20,'#6d5ef7'],['Excel Advanced',100,'#2f9e6b'],['תקנון החברה',100,'#2f9e6b']];
+    const barHTML=bars.map(b=>`<div class="barrow"><div class="bl">${b[0]}<b>${b[1]}%</b></div><div class="bartr"><i style="width:${b[1]}%;background:${b[2]}"></i></div></div>`).join('');
+    const tl=[['12/05/2025','נשלח חוזה לעדכון'],['10/05/2025','השלמת לומדת GDPR'],['08/05/2025','חתימה על טופס 101'],['01/03/2023','יום קליטה']];
+    const tlHTML=`<div class="tl">${tl.map(e=>`<div class="te"><span class="dt">${e[0]}</span><b>${e[1]}</b></div>`).join('')}</div>`;
+    const equip=[['💻','מחשב נייד · Dell XPS 15',['פעיל','st-active']],['📱','טלפון נייד · iPhone 14',['פעיל','st-active']],['🏢','Office 365',['פעיל','st-active']],['🔐','VPN',['פעיל','st-active']]];
+    const eqHTML=equip.map(e=>`<div class="equip-row"><span class="eq-ic">${e[0]}</span>${e[1]}<span class="st-tag ${e[2][1]}">${e[2][0]}</span></div>`).join('');
+    const steps=['קליטה','אישור מנהל','אישור HR','חתימה','סיום'];
+    const stepHTML=`<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">${steps.map((s,i)=>`<span style="display:flex;flex-direction:column;align-items:center;gap:4px;font-size:.72rem;color:${i<3?'var(--green)':'var(--mut)'}"><span style="width:26px;height:26px;border-radius:50%;background:${i<3?'#e6f6ee':'#f4f5fa'};display:flex;align-items:center;justify-content:center">${i<3?'✓':(i===3?'●':'○')}</span>${s}</span>${i<steps.length-1?'<span style="flex:1;height:2px;background:#e8ecf3;min-width:14px"></span>':''}`).join('')}</div>`;
+    panels=`
+      <div class="adm-grid g2-3">
+        ${ep('פרטי עובד',details)}
+        ${ep('משימות פתוחות',taskHTML)}
+      </div>
+      <div class="adm-grid g2-3">
+        ${ep('מסמכים וחתימות',docHTML)}
+        ${ep('לומדות וקורסים',barHTML)}
+      </div>
+      <div class="adm-grid g3">
+        ${ep('ציר זמן העובד',tlHTML)}
+        ${ep('תהליך / שינוי תפקיד',stepHTML+'<p class="pay-note">המנהל האחראי: שירי לוי (HR)</p>')}
+        ${ep('ציוד והרשאות',eqHTML)}
+      </div>`;
+  } else {
+    panels=`
+      <div class="adm-grid g2-3">
+        ${ep('פרטי עובד',`<table class="kv"><tr><td>שם מלא</td><td>יואב לוי</td></tr><tr><td>תפקיד</td><td>מפתח תוכנה</td></tr><tr><td>מחלקה</td><td>פיתוח</td></tr><tr><td>מנהל ישיר</td><td>דנה כהן</td></tr><tr><td>תאריך התחלה</td><td>01/06/2025</td></tr></table>`)}
+        ${ep('משימות פתוחות',empty('משימות קליטה יופיעו כאן עם תחילת התהליך'))}
+      </div>
+      <div class="adm-grid g3">
+        ${ep('לומדות והדרכות',empty('לומדות יווסתו לפי תפקיד ומחלקה'))}
+        ${ep('מסמכים וחתימות',empty('מסמכים לחתימה יופיעו כאן'))}
+        ${ep('המשימות שלי',empty('המשימות שלך יופיעו כאן'))}
+      </div>
+      <div class="adm-grid g3">
+        ${ep('תהליכים פעילים','<div class="doc-row" style="border:none"><div class="li-ic" style="background:var(--vio-l);width:34px;height:34px;border-radius:9px">🚀</div><div class="dn"><b>תהליך קליטה</b><span>הושלם 20%</span></div><span class="ls-chip lc-prog">בתהליך</span></div><div class="ls-bar" style="margin-top:6px"><i style="width:20%"></i></div>')}
+        ${ep('ציוד והרשאות',empty('ציוד והרשאות ישוייכו כאן לאחר שיוך'))}
+        ${ep('ציר זמן',empty('אירועים ומשימות יופיעו כאן בהמשך'))}
+      </div>`;
+  }
+  return `<div class="adm-body">
+    <div class="ec-tabs">
+      <button class="on">תצוגה כללית</button><button onclick="toast('לשונית — דמו')">מסמכים</button>
+      <button onclick="toast('לשונית — דמו')">לומדות</button><button onclick="toast('לשונית — דמו')">תהליכים</button>
+      <button onclick="toast('לשונית — דמו')">ציוד והרשאות</button><button onclick="toast('לשונית — דמו')">שכר</button>
+    </div>
+    ${head}${kpiRow}${panels}
+  </div>`;
+}
 
 </script>
 </body>
