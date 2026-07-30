@@ -100,18 +100,26 @@
   .examples{padding:0 14px 8px;display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}
   .chip{border:1px solid var(--line);background:#fff;border-radius:30px;font-family:inherit;font-size:.78rem;font-weight:500;color:var(--ink);padding:8px 13px;cursor:pointer}
   .chip:active{transform:scale(.96)}
-  .voice-hint{padding:7px 14px 4px;background:#fff;color:var(--mut);font-size:.72rem;text-align:center;flex-shrink:0}
-  .composer{padding:9px 14px calc(13px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:8px;align-items:center;flex-shrink:0;background:#fff}
-  .composer input{flex:1;min-width:0;border:1px solid var(--line);border-radius:30px;padding:11px 14px;font-family:inherit;font-size:.86rem;background:var(--bg)}
-  .composer input:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(39,194,221,.12)}
-  .send,.mic{border:none;width:46px;height:46px;border-radius:50%;font-size:1.08rem;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-  .send{background:var(--navy);color:#fff}
-  .mic{background:#e9f8fb;color:var(--cyan-d);border:1px solid #bceaf2;position:relative}
-  .mic.listening{background:#e0473a;color:#fff;border-color:#e0473a;animation:pulseMic 1.1s infinite}
-  .mic.listening::after{content:"";position:absolute;inset:-6px;border:2px solid rgba(224,71,58,.25);border-radius:50%}
-  @keyframes pulseMic{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
-  .voice-status{display:none;padding:6px 14px;background:#fff4f2;color:#b33b31;font-size:.74rem;text-align:center;font-weight:600;flex-shrink:0}
-  .voice-status.show{display:block}
+  .composer{padding:11px 14px calc(13px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:9px;flex-shrink:0;background:#fff}
+  .composer input{flex:1;border:1px solid var(--line);border-radius:30px;padding:11px 16px;font-family:inherit;font-size:.88rem;background:var(--bg)}
+  .composer input:focus{outline:none;border-color:var(--cyan)}
+  .mic{background:#27c2dd;color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0;transition:.18s;position:relative}
+  .mic.listening{background:#e14b4b;box-shadow:0 0 0 8px rgba(225,75,75,.16);animation:micpulse 1.1s infinite}
+  .mic.unsupported{opacity:.45;cursor:not-allowed}
+  @keyframes micpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  .send{background:var(--navy);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0}
+  .voicebar{display:none;align-items:center;gap:8px;padding:8px 16px;background:#fff4f2;border-top:1px solid #f2d3cf;color:#a83a32;font-size:.78rem;font-weight:600}
+  .voicebar.show{display:flex}
+  .voicebar .wave{display:flex;gap:3px;align-items:center}
+  .voicebar .wave i{width:3px;height:10px;background:#e14b4b;border-radius:4px;animation:wave .8s infinite alternate}
+  .voicebar .wave i:nth-child(2){animation-delay:.15s;height:17px}.voicebar .wave i:nth-child(3){animation-delay:.3s;height:12px}
+  @keyframes wave{from{transform:scaleY(.45)}to{transform:scaleY(1.1)}}
+  .confirmbox{align-self:stretch;background:#fff;border:1px solid #dce5f2;border-radius:15px;padding:13px 14px;box-shadow:0 6px 18px rgba(33,69,127,.08)}
+  .confirmbox .ct{font-family:"Rubik";font-weight:700;font-size:.9rem;color:var(--ink)}
+  .confirmbox .cd{font-size:.8rem;color:#52617a;line-height:1.55;margin-top:5px}
+  .confirmbox .ca{display:flex;gap:8px;margin-top:11px}
+  .confirmbox .ca button{flex:1;border:none;border-radius:10px;padding:9px;font-family:inherit;font-weight:700;cursor:pointer}
+  .confirmbox .yes{background:var(--navy);color:#fff}.confirmbox .no{background:#eef2f7;color:var(--ink)}
   .typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:16px}
   .typing i{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:blink 1.2s infinite}
   .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
@@ -764,9 +772,9 @@
         </div>
       </div>
 
-      <div class="amitcard" onclick="openVoiceChat()">
+      <div class="amitcard" onclick="openChatVoice()">
         <div class="av"><span class="avatar" role="img" aria-label="עמית"></span><span class="nbadge">4</span></div>
-        <div class="tt"><b>🎤 דבר/י או כתוב/י לעמית</b><span>כניסה ויציאה · מחלה · חופשה · תיקון דיווח</span></div>
+        <div class="tt"><b>🎤 דבר/י או כתוב/י לעמית</b><span>מחלה, חופשה, דיווח נוכחות, תלוש ועוד</span></div>
         <div class="go">‹</div>
       </div>
 
@@ -898,11 +906,10 @@
       </div>
       <div class="chat" id="thread"></div>
       <div class="examples" id="examples"></div>
-      <div class="voice-hint">אפשר לומר: “אני חולה היום”, “אני רוצה חופש מחר”, “שכחתי יציאה”</div>
-      <div class="voice-status" id="voice-status" aria-live="polite">מקשיב/ה… אפשר לדבר עכשיו</div>
+      <div class="voicebar" id="voicebar"><span class="wave"><i></i><i></i><i></i></span><span id="voiceText">מקשיב/ה… שחרר/י כדי לסיים</span></div>
       <div class="composer">
-        <button class="mic" id="mic-btn" onclick="toggleVoice()" aria-label="דיבור לעמית" title="דיבור לעמית">🎤</button>
-        <input id="q" placeholder="כתבו או דברו עם עמית…" onkeydown="if(event.key==='Enter')sendQ()">
+        <input id="q" aria-label="הודעה לעמית" placeholder="כתבו או אמרו: אני חולה היום, אני רוצה חופש…" onkeydown="if(event.key==='Enter')sendQ()">
+        <button class="mic" id="micBtn" title="לחיצה ממושכת לדיבור" aria-label="דיבור לעמית">🎤</button>
         <button class="send" onclick="sendQ()" aria-label="שליחה">➤</button>
       </div>
     </div>
@@ -1210,6 +1217,9 @@ function showAlerts(){
 
 /* ---------- routing ---------- */
 const ACTIONS=[
+ {k:['שכחתי להעביר יציאה','שכחתי יציאה','לא דיווחתי יציאה','לתקן יציאה'],fn:()=>confirmAction('השלמת דיווח יציאה','הבנתי שברצונך להשלים דיווח יציאה להיום. לאחר האישור תיפתח בקשה עם שעת היציאה להזנה.','דיווח היציאה נשלח להשלמה')},
+ {k:['עובד מהבית','עבודה מהבית','לעבוד מהבית'],fn:()=>confirmAction('דיווח עבודה מהבית','הבנתי שברצונך לדווח עבודה מהבית למחר. לאשר את הבקשה?','בקשת העבודה מהבית נשלחה לאישור')},
+ {k:['אני חולה היום','חולה היום','לדווח שאני חולה'],fn:()=>confirmAction('דיווח מחלה','הבנתי שברצונך לדווח מחלה להיום. הדיווח יועבר לפי מדיניות הארגון.','דיווח המחלה נשמר')},
  {k:['לבקש חופשה','בקשת חופשה','רוצה לבקש','להגיש חופשה','לתכנן חופשה','לבקש היעדרות','בקשת היעדרות','להגיש בקשה','לבקש יום','מבקש חופשה'],fn:()=>renderVacation('חופשה')},
  {k:['מחלה','ימי מחלה','לדווח מחלה'],fn:()=>renderVacation('מחלה')},
  {k:['מילואים'],fn:()=>renderVacation('מילואים')},
@@ -1233,9 +1243,63 @@ const RED=[
  {k:['פיצויים','פיטור','כמה מגיע לי אם'],a:'זו שאלה רגישה שתלויה בנתונים אישיים ובפרשנות — לא אתן מספר שעלול להיות לא מדויק. אני מעביר/ה אותך לחשב/ת השכר לחישוב מחייב.',s:'מועבר לחשב/ת שכר'},
  {k:['תאשר','אשר לי','תבטל','תתקן'],a:'אינני הגורם שמאשר/מתקן נתונים או בקשות. אני יכול/ה להראות לך את הסטטוס ולהעביר את הנושא למנהל/ת לטיפול. במחלוקת על נתון — אפתח עבורך בירור.',s:'מועבר למנהל/ת'},
 ];
-const EX=['כמה חופשה נשארה לי?','אני רוצה לבקש חופשה','הצג לי את התלוש','מה הדיווחים החסרים שלי?','אני צריך אישור העסקה','מתי דמי ההבראה?'];
+const EX=['🤒 אני חולה היום','🌴 אני רוצה חופש','⏰ שכחתי להעביר יציאה','🏠 אני עובד/ת מהבית מחר','💰 הצג לי תלוש'];
 
-function renderEx(){document.getElementById('examples').innerHTML=EX.map(q=>`<button class="chip" onclick="ask(this.textContent)">${q}</button>`).join('');}
+function renderEx(){document.getElementById('examples').innerHTML=EX.map(q=>`<button class="chip" onclick="ask(this.textContent.replace(/^[^ ]+\\s/,''))">${q}</button>`).join('');}
+
+function confirmAction(title,desc,done){
+  const t=document.getElementById('thread');
+  const box=document.createElement('div');
+  box.className='confirmbox';
+  box.innerHTML=`<div class="ct">${title}</div><div class="cd">${desc}</div><div class="ca"><button class="no">שינוי</button><button class="yes">אישור וביצוע</button></div>`;
+  t.appendChild(box);t.scrollTop=t.scrollHeight;
+  box.querySelector('.no').onclick=()=>{box.remove();botSay('אין בעיה. כתבו או אמרו לי מה תרצו לשנות.');document.getElementById('q').focus();};
+  box.querySelector('.yes').onclick=()=>{box.innerHTML=`<div class="ct">✓ הפעולה בוצעה</div><div class="cd">${done}. ניתן לעקוב אחר הסטטוס באזור האישי.</div>`;toast(done);};
+}
+
+/* voice input — Push to Talk + click fallback */
+const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+let recognition=null,isListening=false,voiceFinal='';
+function initVoice(){
+  const b=document.getElementById('micBtn');
+  if(!b)return;
+  if(!SpeechRecognition){b.classList.add('unsupported');b.title='הדפדפן אינו תומך בזיהוי דיבור';return;}
+  recognition=new SpeechRecognition();
+  recognition.lang='he-IL';recognition.interimResults=true;recognition.continuous=false;
+  recognition.onstart=()=>setListening(true);
+  recognition.onresult=e=>{
+    let interim='';voiceFinal='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const tx=e.results[i][0].transcript;
+      if(e.results[i].isFinal)voiceFinal+=tx; else interim+=tx;
+    }
+    document.getElementById('q').value=(voiceFinal||interim).trim();
+    document.getElementById('voiceText').textContent=interim?`שומע/ת: ${interim}`:'מקשיב/ה… שחרר/י כדי לסיים';
+  };
+  recognition.onerror=e=>{setListening(false);if(e.error!=='aborted'&&e.error!=='no-speech')toast('לא הצלחתי לשמוע. נסו שוב.');};
+  recognition.onend=()=>{
+    setListening(false);
+    const v=document.getElementById('q').value.trim();
+    if(v)setTimeout(()=>sendQ(),180);
+  };
+  const start=e=>{e.preventDefault();startListening();};
+  const stop=e=>{e.preventDefault();stopListening();};
+  b.addEventListener('mousedown',start);b.addEventListener('mouseup',stop);b.addEventListener('mouseleave',()=>{if(isListening)stopListening();});
+  b.addEventListener('touchstart',start,{passive:false});b.addEventListener('touchend',stop,{passive:false});
+  b.addEventListener('click',e=>{e.preventDefault();if(!isListening)startListening();else stopListening();});
+}
+function setListening(on){
+  isListening=on;
+  document.getElementById('micBtn')?.classList.toggle('listening',on);
+  document.getElementById('voicebar')?.classList.toggle('show',on);
+  if(!on)document.getElementById('voiceText').textContent='מקשיב/ה… שחרר/י כדי לסיים';
+}
+function startListening(){
+  if(!recognition||isListening)return;
+  voiceFinal='';document.getElementById('q').value='';
+  try{recognition.start();}catch(e){}
+}
+function stopListening(){if(recognition&&isListening){try{recognition.stop();}catch(e){}}}
 
 function answer(q){
   const low=q.toLowerCase();
@@ -1258,63 +1322,21 @@ function answer(q){
   },600);
 }
 function ask(q){meSay(q);answer(q);}
-function sendQ(){const i=document.getElementById('q');const v=i.value.trim();if(!v)return;i.value='';stopVoice();ask(v);}
-
-/* Voice input — Web Speech API (Chrome/Edge). The text is always shown before sending. */
-let recognition=null,voiceListening=false;
-function voiceSupported(){return !!(window.SpeechRecognition||window.webkitSpeechRecognition);}
-function ensureRecognition(){
-  if(recognition||!voiceSupported())return recognition;
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  recognition=new SR();
-  recognition.lang='he-IL';
-  recognition.interimResults=true;
-  recognition.continuous=false;
-  recognition.onstart=()=>setVoiceUI(true);
-  recognition.onresult=(e)=>{
-    let finalText='',interim='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const t=e.results[i][0].transcript;
-      if(e.results[i].isFinal)finalText+=t;else interim+=t;
-    }
-    const q=document.getElementById('q');
-    q.value=(finalText||interim).trim();
-    q.focus();
-  };
-  recognition.onerror=(e)=>{
-    setVoiceUI(false);
-    if(e.error!=='aborted')toast(e.error==='not-allowed'?'יש לאפשר גישה למיקרופון בדפדפן':'לא הצלחתי לשמוע. אפשר לנסות שוב');
-  };
-  recognition.onend=()=>setVoiceUI(false);
-  return recognition;
-}
-function setVoiceUI(on){
-  voiceListening=on;
-  const b=document.getElementById('mic-btn'),st=document.getElementById('voice-status');
-  if(b){b.classList.toggle('listening',on);b.textContent=on?'■':'🎤';b.setAttribute('aria-label',on?'עצירת הקלטה':'דיבור לעמית');}
-  if(st)st.classList.toggle('show',on);
-}
-function toggleVoice(){
-  if(!voiceSupported()){toast('הדפדפן הזה לא תומך כרגע בהכתבה קולית. אפשר להקליד לעמית.');return;}
-  const r=ensureRecognition();
-  if(voiceListening){r.stop();return;}
-  document.getElementById('q').value='';
-  try{r.start();}catch(e){/* prevent double-start */}
-}
-function stopVoice(){if(recognition&&voiceListening){try{recognition.stop();}catch(e){}}setVoiceUI(false);}
-function openVoiceChat(){openChat();setTimeout(()=>toggleVoice(),350);}
+function sendQ(){stopListening();const i=document.getElementById('q');const v=i.value.trim();if(!v)return;i.value='';ask(v);}
 
 function openChat(seed){
   document.getElementById('chat').classList.add('open');
   const t=document.getElementById('thread');
-  if(!t.children.length){botSay('שלום! אני עמית, העוזר שלך לשכר ונוכחות. אפשר לשאול בשפה חופשית, או לבחור פעולה — למשל לבקש חופשה, להשלים דיווחים, או לראות את התלוש.');renderEx();}
+  if(!t.children.length){botSay('שלום! אני עמית, העוזר האישי שלך. אפשר לדבר או לכתוב, ואני גם מבצע פעולות — מחלה, חופשה, תיקון נוכחות, עבודה מהבית ותלוש. לפני פעולה משמעותית אבקש ממך אישור.');renderEx();}
   if(seed==='__alerts__'){setTimeout(()=>{showAlerts();t.scrollTop=0;},200);return;}
   if(seed)setTimeout(()=>ask(seed),200);
   setTimeout(()=>document.getElementById('q').focus(),300);
 }
-function closeChat(){stopVoice();document.getElementById('chat').classList.remove('open');}
+function openChatVoice(){openChat();setTimeout(startListening,420);}
+function closeChat(){stopListening();document.getElementById('chat').classList.remove('open');}
 let tt;function toast(m){const e=document.getElementById('toast');e.textContent=m;e.style.opacity=1;clearTimeout(tt);tt=setTimeout(()=>e.style.opacity=0,1600);}
 renderEx();
+initVoice();
 
 /* =================================================================
    EMPLOYEE LIFECYCLE — self service (mobile) + drawer + admin
