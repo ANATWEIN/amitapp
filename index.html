@@ -103,23 +103,17 @@
   .composer{padding:11px 14px calc(13px + env(safe-area-inset-bottom));border-top:1px solid var(--line);display:flex;gap:9px;flex-shrink:0;background:#fff}
   .composer input{flex:1;border:1px solid var(--line);border-radius:30px;padding:11px 16px;font-family:inherit;font-size:.88rem;background:var(--bg)}
   .composer input:focus{outline:none;border-color:var(--cyan)}
-  .mic{background:#27c2dd;color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0;transition:.18s;position:relative}
-  .mic.listening{background:#e14b4b;box-shadow:0 0 0 8px rgba(225,75,75,.16);animation:micpulse 1.1s infinite}
-  .mic.unsupported{opacity:.45;cursor:not-allowed}
-  @keyframes micpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
   .send{background:var(--navy);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;flex-shrink:0}
+  .mic{background:var(--cyan);color:#fff;border:none;width:46px;height:46px;border-radius:50%;font-size:1.15rem;cursor:pointer;flex-shrink:0;transition:.18s;position:relative}
+  .mic.listening{background:#e14b4b;box-shadow:0 0 0 8px rgba(225,75,75,.16);animation:micpulse 1.1s infinite}
+  .mic.unsupported{opacity:.4;cursor:not-allowed}
+  @keyframes micpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
   .voicebar{display:none;align-items:center;gap:8px;padding:8px 16px;background:#fff4f2;border-top:1px solid #f2d3cf;color:#a83a32;font-size:.78rem;font-weight:600}
   .voicebar.show{display:flex}
   .voicebar .wave{display:flex;gap:3px;align-items:center}
-  .voicebar .wave i{width:3px;height:10px;background:#e14b4b;border-radius:4px;animation:wave .8s infinite alternate}
+  .voicebar .wave i{width:3px;height:11px;background:#e14b4b;border-radius:4px;animation:vwave .8s infinite alternate}
   .voicebar .wave i:nth-child(2){animation-delay:.15s;height:17px}.voicebar .wave i:nth-child(3){animation-delay:.3s;height:12px}
-  @keyframes wave{from{transform:scaleY(.45)}to{transform:scaleY(1.1)}}
-  .confirmbox{align-self:stretch;background:#fff;border:1px solid #dce5f2;border-radius:15px;padding:13px 14px;box-shadow:0 6px 18px rgba(33,69,127,.08)}
-  .confirmbox .ct{font-family:"Rubik";font-weight:700;font-size:.9rem;color:var(--ink)}
-  .confirmbox .cd{font-size:.8rem;color:#52617a;line-height:1.55;margin-top:5px}
-  .confirmbox .ca{display:flex;gap:8px;margin-top:11px}
-  .confirmbox .ca button{flex:1;border:none;border-radius:10px;padding:9px;font-family:inherit;font-weight:700;cursor:pointer}
-  .confirmbox .yes{background:var(--navy);color:#fff}.confirmbox .no{background:#eef2f7;color:var(--ink)}
+  @keyframes vwave{from{transform:scaleY(.45)}to{transform:scaleY(1.1)}}
   .typing{align-self:flex-start;display:flex;gap:4px;padding:12px 14px;background:#fff;border:1px solid var(--line);border-radius:16px}
   .typing i{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:blink 1.2s infinite}
   .typing i:nth-child(2){animation-delay:.2s}.typing i:nth-child(3){animation-delay:.4s}
@@ -194,6 +188,25 @@
   .pay-note{font-size:.76rem;color:var(--mut);margin-top:8px;line-height:1.5}
   .mini-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}
   .mini-chips button{border:1px solid var(--line);background:var(--bg);border-radius:20px;font-family:inherit;font-size:.74rem;color:var(--ink);padding:6px 11px;cursor:pointer}
+  .tier-base{display:flex;justify-content:space-between;align-items:center;background:var(--vio-l);border:1px solid #f3dca6;border-radius:10px;padding:8px 12px;margin:2px 0 10px;font-size:.8rem;color:var(--navy)}
+  .tier-base b{font-family:"Rubik";direction:ltr;unicode-bidi:plaintext}
+  .day-ex{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin:2px 0 12px}
+  .day-ex .dh{display:flex;justify-content:space-between;align-items:center;font-size:.82rem;color:var(--navy);font-weight:600;margin-bottom:9px}
+  .day-ex .dh .tag{background:#fff4e0;color:var(--amber-d);font-size:.68rem;font-weight:700;padding:2px 9px;border-radius:20px}
+  .day-ex .drow{display:flex;justify-content:space-between;font-size:.83rem;padding:4px 0;color:#41506b}
+  .day-ex .drow b{font-family:"Rubik";direction:ltr;unicode-bidi:plaintext}
+  .day-ex .gap{border-top:1px dashed var(--line);margin-top:4px;padding-top:8px;color:var(--amber-d);font-weight:600}
+  .day-ex .why{background:#fff4e0;border:1px solid #f3d2a0;border-radius:9px;padding:9px 11px;font-size:.78rem;color:#8a5a08;line-height:1.55;margin-top:9px}
+  .day-ex .why b{color:#7a4e06}
+  .tier-table{width:100%;font-size:.8rem;border-collapse:collapse}
+  .tier-table th{font-weight:600;color:var(--mut);font-size:.71rem;padding:5px 3px;border-bottom:1px solid var(--line);text-align:center}
+  .tier-table th:first-child{text-align:right}.tier-table th:last-child{text-align:left}
+  .tier-table td{padding:8px 3px;border-bottom:1px solid var(--line);text-align:center}
+  .tier-table td:first-child{text-align:right}
+  .tier-table td:last-child{text-align:left;font-family:"Rubik";direction:ltr;unicode-bidi:plaintext;white-space:nowrap}
+  .tier-table tr.tot td{border-top:2px solid var(--navy);border-bottom:none;font-weight:800;color:var(--navy);padding-top:9px}
+  .tier-pct{color:var(--amber-d);font-weight:700}
+  .tier-ot{background:var(--navy);color:#fff;border:none;border-radius:10px;font-family:"Rubik";font-weight:600;font-size:.8rem;padding:9px 13px;cursor:pointer;margin-top:10px;width:100%}
   .botrow{align-self:flex-start;display:flex;gap:8px;align-items:flex-start;max-width:92%}
   .botrow .msg.bot{max-width:100%}
   .avatar.mini{width:30px;height:30px;flex-shrink:0;box-shadow:0 1px 3px rgba(14,23,38,.18)}
@@ -772,9 +785,9 @@
         </div>
       </div>
 
-      <div class="amitcard" onclick="openChatVoice()">
+      <div class="amitcard" onclick="openChat()">
         <div class="av"><span class="avatar" role="img" aria-label="עמית"></span><span class="nbadge">4</span></div>
-        <div class="tt"><b>🎤 דבר/י או כתוב/י לעמית</b><span>מחלה, חופשה, דיווח נוכחות, תלוש ועוד</span></div>
+        <div class="tt"><b>שאל/י את עמית</b><span>כמה חופשה נשארה לי? למה ירד לי מס?</span></div>
         <div class="go">‹</div>
       </div>
 
@@ -906,10 +919,10 @@
       </div>
       <div class="chat" id="thread"></div>
       <div class="examples" id="examples"></div>
-      <div class="voicebar" id="voicebar"><span class="wave"><i></i><i></i><i></i></span><span id="voiceText">מקשיב/ה… שחרר/י כדי לסיים</span></div>
+      <div class="voicebar" id="voicebar"><span class="wave"><i></i><i></i><i></i></span><span id="voiceText">מקשיב/ה… דבר/י עכשיו</span></div>
       <div class="composer">
-        <input id="q" aria-label="הודעה לעמית" placeholder="כתבו או אמרו: אני חולה היום, אני רוצה חופש…" onkeydown="if(event.key==='Enter')sendQ()">
-        <button class="mic" id="micBtn" title="לחיצה ממושכת לדיבור" aria-label="דיבור לעמית">🎤</button>
+        <input id="q" placeholder="כתבו או אמרו לעמית…" onkeydown="if(event.key==='Enter')sendQ()">
+        <button class="mic" id="micBtn" onclick="toggleMic()" title="דיבור לעמית" aria-label="דיבור לעמית">🎤</button>
         <button class="send" onclick="sendQ()" aria-label="שליחה">➤</button>
       </div>
     </div>
@@ -1174,7 +1187,49 @@ function renderPayslip(){
       <button onclick="ask('למה ירד לי הנטו?')">למה ירד הנטו?</button>
       <button onclick="ask('מה זה שווי רכב?')">מה זה שווי רכב?</button>
       <button onclick="ask('פירוט הניכויים')">פירוט הניכויים</button>
+      <button onclick="renderTierBreakdown()">פירוק שעות ואחוזים</button>
       <button onclick="ask('הצג תלוש קודם')">תלוש חודש קודם</button>
+    </div>
+  </div>`);
+}
+
+/* ---------- PAYSLIP · hours-tier breakdown + day explanation ---------- */
+function otReq(){
+  meSay('בקשת אישור לשעות נוספות · 15/06/2026 (2:00 שעות)');
+  sent('בקשת <b>אישור שעות נוספות בדיעבד</b> ל-<b>15/06/2026</b> · 2:00 שעות · תעריף 125%');
+}
+function renderTierBreakdown(){
+  const base=72;
+  // monthly tiers (approved hours)
+  const rows=[['שעות רגילות',176,100],['נוספות מאושרות',8,125]];
+  let th=0,tot=0,body='';
+  rows.forEach(([lbl,hrs,pct])=>{
+    const rate=base*pct/100, amt=hrs*rate; th+=hrs; tot+=amt;
+    body+=`<tr><td>${lbl}</td><td>${hrs}</td><td class="tier-pct">${pct}%</td><td>₪${rate.toFixed(2)}</td><td>₪${amt.toLocaleString()}</td></tr>`;
+  });
+  addCard(`<div class="icard">
+    <div class="card-t">⏱ פירוק שעות ואחוזים · יוני 2026</div>
+    <div class="tier-base"><span>ערך שעת בסיס</span><b>₪${base.toFixed(2)}</b></div>
+
+    <div class="day-ex">
+      <div class="dh"><span>יום שני · 15/06/2026</span><span class="tag">שולם על 8 מתוך 10</span></div>
+      <div class="drow"><span>נוכחות בפועל</span><b>10:00 שעות</b></div>
+      <div class="drow"><span>שעות בתשלום (100%)</span><b>8:00 שעות</b></div>
+      <div class="drow gap"><span>פער · לא שולם</span><b>2:00 שעות</b></div>
+      <div class="why">💡 <b>למה שולמו רק 8 שעות?</b> לפי ההסכם שלך, מכסת השעות היומית היא 8 שעות ב-100%. שעות מעבר לכך הן שעות נוספות, והן משולמות (בתעריף 125%) רק לאחר <b>אישור מראש של המנהל</b>. ב-15/06 שתי השעות הנוספות טרם אושרו — ולכן שולמו 8 שעות. אפשר לבקש אישור בדיעבד.</div>
+      <button class="tier-ot" onclick="otReq()">בקשת אישור לשעתיים הנוספות ←</button>
+    </div>
+
+    <div class="pay-note" style="margin:2px 0 8px">פירוק חודשי לפי מדרגות (שעות מאושרות):</div>
+    <table class="tier-table">
+      <tr><th>מדרגה</th><th>שעות</th><th>אחוז</th><th>ערך שעה</th><th>סכום</th></tr>
+      ${body}
+      <tr class="tot"><td>סה״כ שעתי</td><td>${th}</td><td></td><td></td><td>₪${tot.toLocaleString()}</td></tr>
+    </table>
+    <div class="pay-note">ערך שעה בכל מדרגה = ערך הבסיס × האחוז שבהסכם. עד המכסה היומית — 100%; מעבר לכך, שעות נוספות מאושרות — 125% ואילך. (דמו להמחשה)</div>
+    <div class="mini-chips">
+      <button onclick="ask('עמית, למה שולמו לי 8 שעות ולא 10 ב-15/06?')">למה 8 ולא 10?</button>
+      <button onclick="ask('מהו ההסכם שלי לגבי שעות נוספות?')">מהו ההסכם שלי?</button>
     </div>
   </div>`);
 }
@@ -1217,14 +1272,12 @@ function showAlerts(){
 
 /* ---------- routing ---------- */
 const ACTIONS=[
- {k:['שכחתי להעביר יציאה','שכחתי יציאה','לא דיווחתי יציאה','לתקן יציאה'],fn:()=>confirmAction('השלמת דיווח יציאה','הבנתי שברצונך להשלים דיווח יציאה להיום. לאחר האישור תיפתח בקשה עם שעת היציאה להזנה.','דיווח היציאה נשלח להשלמה')},
- {k:['עובד מהבית','עבודה מהבית','לעבוד מהבית'],fn:()=>confirmAction('דיווח עבודה מהבית','הבנתי שברצונך לדווח עבודה מהבית למחר. לאשר את הבקשה?','בקשת העבודה מהבית נשלחה לאישור')},
- {k:['אני חולה היום','חולה היום','לדווח שאני חולה'],fn:()=>confirmAction('דיווח מחלה','הבנתי שברצונך לדווח מחלה להיום. הדיווח יועבר לפי מדיניות הארגון.','דיווח המחלה נשמר')},
  {k:['לבקש חופשה','בקשת חופשה','רוצה לבקש','להגיש חופשה','לתכנן חופשה','לבקש היעדרות','בקשת היעדרות','להגיש בקשה','לבקש יום','מבקש חופשה'],fn:()=>renderVacation('חופשה')},
  {k:['מחלה','ימי מחלה','לדווח מחלה'],fn:()=>renderVacation('מחלה')},
  {k:['מילואים'],fn:()=>renderVacation('מילואים')},
  {k:['להשלים דיווח','דיווחים חסרים','דיווח חסר','חסר דיווח','השלמת דיווח','השלמה','הימים החסרים','ימים חסרים','להשלים'],fn:renderMissing},
  {k:['תלוש','לראות תלוש','הצג תלוש','להציג תלוש','פירוט הניכויים','הניכויים','הצג לי את התלוש'],fn:renderPayslip},
+  {k:['פירוק שעות','שעות ואחוזים','מדרגות שעות','שעות נוספות','8 ולא 10','למה 8','איך חושב השכר'],fn:renderTierBreakdown},
  {k:['אישור העסקה','אישור שכר','אישור העסקה'],fn:()=>renderRequest('בקשת אישור העסקה','אישור העסקה רשמי על נייר חברה, לרוב לבנק / משכנתא / ויזה. הבקשה תופק ותישלח אליך לאחר אישור.')},
  {k:['טופס 101','למלא טופס 101','101'],fn:()=>renderRequest('מילוי טופס 101 · 2026','עדכון נקודות זיכוי ופרטים אישיים לצורכי מס. מילוי לוקח כ-3 דקות; לאחר השליחה הטופס עובר לאישור.')},
 ];
@@ -1243,63 +1296,9 @@ const RED=[
  {k:['פיצויים','פיטור','כמה מגיע לי אם'],a:'זו שאלה רגישה שתלויה בנתונים אישיים ובפרשנות — לא אתן מספר שעלול להיות לא מדויק. אני מעביר/ה אותך לחשב/ת השכר לחישוב מחייב.',s:'מועבר לחשב/ת שכר'},
  {k:['תאשר','אשר לי','תבטל','תתקן'],a:'אינני הגורם שמאשר/מתקן נתונים או בקשות. אני יכול/ה להראות לך את הסטטוס ולהעביר את הנושא למנהל/ת לטיפול. במחלוקת על נתון — אפתח עבורך בירור.',s:'מועבר למנהל/ת'},
 ];
-const EX=['🤒 אני חולה היום','🌴 אני רוצה חופש','⏰ שכחתי להעביר יציאה','🏠 אני עובד/ת מהבית מחר','💰 הצג לי תלוש'];
+const EX=['כמה חופשה נשארה לי?','אני רוצה לבקש חופשה','הצג לי את התלוש','מה הדיווחים החסרים שלי?','אני צריך אישור העסקה','מתי דמי ההבראה?'];
 
-function renderEx(){document.getElementById('examples').innerHTML=EX.map(q=>`<button class="chip" onclick="ask(this.textContent.replace(/^[^ ]+\\s/,''))">${q}</button>`).join('');}
-
-function confirmAction(title,desc,done){
-  const t=document.getElementById('thread');
-  const box=document.createElement('div');
-  box.className='confirmbox';
-  box.innerHTML=`<div class="ct">${title}</div><div class="cd">${desc}</div><div class="ca"><button class="no">שינוי</button><button class="yes">אישור וביצוע</button></div>`;
-  t.appendChild(box);t.scrollTop=t.scrollHeight;
-  box.querySelector('.no').onclick=()=>{box.remove();botSay('אין בעיה. כתבו או אמרו לי מה תרצו לשנות.');document.getElementById('q').focus();};
-  box.querySelector('.yes').onclick=()=>{box.innerHTML=`<div class="ct">✓ הפעולה בוצעה</div><div class="cd">${done}. ניתן לעקוב אחר הסטטוס באזור האישי.</div>`;toast(done);};
-}
-
-/* voice input — Push to Talk + click fallback */
-const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
-let recognition=null,isListening=false,voiceFinal='';
-function initVoice(){
-  const b=document.getElementById('micBtn');
-  if(!b)return;
-  if(!SpeechRecognition){b.classList.add('unsupported');b.title='הדפדפן אינו תומך בזיהוי דיבור';return;}
-  recognition=new SpeechRecognition();
-  recognition.lang='he-IL';recognition.interimResults=true;recognition.continuous=false;
-  recognition.onstart=()=>setListening(true);
-  recognition.onresult=e=>{
-    let interim='';voiceFinal='';
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const tx=e.results[i][0].transcript;
-      if(e.results[i].isFinal)voiceFinal+=tx; else interim+=tx;
-    }
-    document.getElementById('q').value=(voiceFinal||interim).trim();
-    document.getElementById('voiceText').textContent=interim?`שומע/ת: ${interim}`:'מקשיב/ה… שחרר/י כדי לסיים';
-  };
-  recognition.onerror=e=>{setListening(false);if(e.error!=='aborted'&&e.error!=='no-speech')toast('לא הצלחתי לשמוע. נסו שוב.');};
-  recognition.onend=()=>{
-    setListening(false);
-    const v=document.getElementById('q').value.trim();
-    if(v)setTimeout(()=>sendQ(),180);
-  };
-  const start=e=>{e.preventDefault();startListening();};
-  const stop=e=>{e.preventDefault();stopListening();};
-  b.addEventListener('mousedown',start);b.addEventListener('mouseup',stop);b.addEventListener('mouseleave',()=>{if(isListening)stopListening();});
-  b.addEventListener('touchstart',start,{passive:false});b.addEventListener('touchend',stop,{passive:false});
-  b.addEventListener('click',e=>{e.preventDefault();if(!isListening)startListening();else stopListening();});
-}
-function setListening(on){
-  isListening=on;
-  document.getElementById('micBtn')?.classList.toggle('listening',on);
-  document.getElementById('voicebar')?.classList.toggle('show',on);
-  if(!on)document.getElementById('voiceText').textContent='מקשיב/ה… שחרר/י כדי לסיים';
-}
-function startListening(){
-  if(!recognition||isListening)return;
-  voiceFinal='';document.getElementById('q').value='';
-  try{recognition.start();}catch(e){}
-}
-function stopListening(){if(recognition&&isListening){try{recognition.stop();}catch(e){}}}
+function renderEx(){document.getElementById('examples').innerHTML=EX.map(q=>`<button class="chip" onclick="ask(this.textContent)">${q}</button>`).join('');}
 
 function answer(q){
   const low=q.toLowerCase();
@@ -1324,17 +1323,49 @@ function answer(q){
 function ask(q){meSay(q);answer(q);}
 function sendQ(){stopListening();const i=document.getElementById('q');const v=i.value.trim();if(!v)return;i.value='';ask(v);}
 
+function openChatVoice(){openChat();setTimeout(()=>{if(typeof startListening==='function')startListening();},450);}
 function openChat(seed){
   document.getElementById('chat').classList.add('open');
   const t=document.getElementById('thread');
-  if(!t.children.length){botSay('שלום! אני עמית, העוזר האישי שלך. אפשר לדבר או לכתוב, ואני גם מבצע פעולות — מחלה, חופשה, תיקון נוכחות, עבודה מהבית ותלוש. לפני פעולה משמעותית אבקש ממך אישור.');renderEx();}
+  if(!t.children.length){botSay('שלום! אני עמית, העוזר שלך לשכר ונוכחות. אפשר לשאול בשפה חופשית, או לבחור פעולה — למשל לבקש חופשה, להשלים דיווחים, או לראות את התלוש.');renderEx();}
   if(seed==='__alerts__'){setTimeout(()=>{showAlerts();t.scrollTop=0;},200);return;}
   if(seed)setTimeout(()=>ask(seed),200);
   setTimeout(()=>document.getElementById('q').focus(),300);
 }
-function openChatVoice(){openChat();setTimeout(startListening,420);}
-function closeChat(){stopListening();document.getElementById('chat').classList.remove('open');}
+function closeChat(){document.getElementById('chat').classList.remove('open');}
 let tt;function toast(m){const e=document.getElementById('toast');e.textContent=m;e.style.opacity=1;clearTimeout(tt);tt=setTimeout(()=>e.style.opacity=0,1600);}
+/* ---------- VOICE INPUT — click-to-talk, transcribes into chat ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+let recognition=null,isListening=false;
+function initVoice(){
+  const b=document.getElementById('micBtn');if(!b)return;
+  if(!SR){b.classList.add('unsupported');b.title='הדפדפן אינו תומך בזיהוי דיבור';return;}
+  recognition=new SR();recognition.lang='he-IL';recognition.interimResults=true;recognition.continuous=false;
+  recognition.onstart=()=>setListening(true);
+  recognition.onresult=e=>{
+    let interim='',final='';
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const tx=e.results[i][0].transcript;
+      if(e.results[i].isFinal)final+=tx; else interim+=tx;
+    }
+    document.getElementById('q').value=(final||interim).trim();
+    document.getElementById('voiceText').textContent=interim?('שומע/ת: '+interim):'מקשיב/ה… דבר/י עכשיו';
+  };
+  recognition.onerror=e=>{setListening(false);if(e.error!=='aborted'&&e.error!=='no-speech')toast('לא הצלחתי לשמוע. נסו שוב.');};
+  recognition.onend=()=>{setListening(false);const v=document.getElementById('q').value.trim();if(v)setTimeout(sendQ,150);};
+}
+function setListening(on){
+  isListening=on;
+  document.getElementById('micBtn')?.classList.toggle('listening',on);
+  document.getElementById('voicebar')?.classList.toggle('show',on);
+  if(!on){const vt=document.getElementById('voiceText');if(vt)vt.textContent='מקשיב/ה… דבר/י עכשיו';}
+}
+function startListening(){if(!recognition||isListening)return;document.getElementById('q').value='';try{recognition.start();}catch(e){}}
+function stopListening(){if(recognition&&isListening){try{recognition.stop();}catch(e){}}}
+function toggleMic(){
+  if(!SR){toast('הדפדפן אינו תומך בזיהוי דיבור — אפשר להקליד');return;}
+  if(isListening)stopListening();else startListening();
+}
 renderEx();
 initVoice();
 
